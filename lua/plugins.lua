@@ -4,7 +4,6 @@ local function setup()
     require'paq'{
         {'beardedsakimonkey/nvim-udir', branch='develop'},
         {'beardedsakimonkey/nvim-ufind'},
-        {'tpope/vim-commentary'},
         {'tpope/vim-sleuth'},
         {'tpope/vim-abolish'},
         {'savq/paq-nvim',               pin=true},
@@ -13,8 +12,6 @@ local function setup()
         {'echasnovski/mini.operators',  pin=true},
         {'echasnovski/mini.hipatterns', pin=true, opt=true},
         {'dstein64/vim-startuptime',    pin=true, opt=true},
-        'hrsh7th/nvim-cmp',
-        'hrsh7th/cmp-nvim-lsp',
         'mhartington/formatter.nvim',
         'MaxMEllon/vim-jsx-pretty',
         'rebelot/kanagawa.nvim',
@@ -107,33 +104,6 @@ local function configure()
 
     -- vim-abolish -------------------------------------------------------------
     -- Abbreviations in ../after/plugin/abolish.vim
-
-    -- nvim-cmp ----------------------------------------------------------------
-    local cmp = require'cmp'
-    cmp.setup({
-        snippet = {
-            expand = function(args)
-            end,
-        },
-        window = {
-            -- completion = cmp.config.window.bordered(),
-            -- documentation = cmp.config.window.bordered(),
-        },
-        mapping = cmp.mapping.preset.insert({
-            ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-            ['<C-f>'] = cmp.mapping.scroll_docs(4),
-            ['<C-Space>'] = cmp.mapping.complete(),
-            ['<C-e>'] = cmp.mapping.abort(),
-            ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-        }),
-        sources = cmp.config.sources({
-            { name = 'nvim_lsp' },
-        }, {
-            -- { name = 'buffer' },
-        })
-    })
-    -- Set up lspconfig.
-    -- local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
     -- formatter.nvim --------------------------------------------------------
     local futil = require('formatter.util')

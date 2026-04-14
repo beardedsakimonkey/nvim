@@ -41,7 +41,7 @@ vim.opt.fileignorecase = false
 vim.opt.foldmethod = 'expr'
 vim.opt.foldlevelstart = 99
 vim.opt.foldopen:remove('block')
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 
 vim.opt.modeline = false
 vim.opt.shortmess = 'filnxtToOfaTWIcFS'
