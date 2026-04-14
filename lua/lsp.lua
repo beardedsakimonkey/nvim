@@ -4,7 +4,6 @@ vim.diagnostic.config({
 })
 
 com('LspLog', function() vim.cmd('tabnew ' .. vim.lsp.get_log_path()) end)
-com('LspInfo', function() print(vim.inspect(vim.lsp.get_clients())) end)
 
 local au = aug'my/lsp'
 

@@ -76,10 +76,6 @@ hl('DiagnosticSignError', {bg = '#c9c5b5', fg = 'Red3'})
 hl('DiagnosticSignWarn', {bg = '#c9c5b5', fg = 'Orange3'})
 hl('DiagnosticSignInfo', {bg = '#c9c5b5', fg = 'Orange2'})
 hl('DiagnosticSignHint', {bg = '#c9c5b5', fg = 'Orange2'})
-vim.cmd 'sign define DiagnosticSignError text=\226\151\143 texthl=DiagnosticSignError linehl= numhl='
-vim.cmd 'sign define DiagnosticSignWarn  text=\226\151\143 texthl=DiagnosticSignWarn  linehl= numhl='
-vim.cmd 'sign define DiagnosticSignInfo  text=\226\151\143 texthl=DiagnosticSignInfo  linehl= numhl='
-vim.cmd 'sign define DiagnosticSignHint  text=\226\151\143 texthl=DiagnosticSignHint  linehl= numhl='
 
 hl('UdirExecutable', {link = 'PreProc'})
 hl('UfindMatch', {bg = 'none', bold = 1, fg = '#BD00BD'})
