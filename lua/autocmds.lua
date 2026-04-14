@@ -32,7 +32,7 @@ end
 
 local function update_user_js()
     local cmd = util.FF_PROFILE .. 'updater.sh'
-    vim.loop.spawn(cmd, {args = {'-d', '-s', '-b'}}, function(exit)
+    vim.uv.spawn(cmd, {args = {'-d', '-s', '-b'}}, function(exit)
         print(exit == 0 and 'Updated user.js' or ('exited nonzero: ' .. exit))
     end)
 end

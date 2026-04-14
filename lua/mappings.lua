@@ -50,7 +50,7 @@ local function navigate(dir)
         local bottomedge_prev_win = vim.fn.win_screenpos(pnr)[1] + vim.fn.winheight(pnr) - 1
         prev_win_same_dir = (topedge_cur_win - 1) == (bottomedge_prev_win + 1)
     end
-    vim.cmd('try | wincmd ' .. (prev_win_same_dir and 'p' or dir) .. ' | catch | entry')
+    vim.cmd('try | wincmd ' .. (prev_win_same_dir and 'p' or dir) .. ' | catch | endtry')
 end
 
 local function rename()

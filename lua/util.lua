@@ -2,7 +2,7 @@ local M = {}
 
 function M.exists(path)
     -- Passing '' as the mode corresponds to access(2)'s F_OK
-    return vim.loop.fs_access(path, '') == true
+    return vim.uv.fs_access(path, '') == true
 end
 
 M.FF_PROFILE = '/Users/tim/Library/Application Support/Firefox/Profiles/hplm9m7l.default-release'

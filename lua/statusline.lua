@@ -3,17 +3,18 @@ local M = {}
 M.statusline = function()
     local current_win = vim.g.statusline_winid == vim.fn.win_getid()
     local buf = vim.api.nvim_win_get_buf(vim.g.statusline_winid)
-    local has_lsp = #vim.lsp.get_clients({bufnr = buf}) > 0
-    local issues = #vim.diagnostic.get(buf, {severity = {min = vim.diagnostic.severity.WARN}})
+    local diag = vim.diagnostic.status(buf)
+    local progress = package.loaded['vim.ui'] and vim.ui.progress_status() or ''
     return "%1*%{!&modifiable ? '  X ' : &ro ? '  RO ' : ''}"
         .. "%2*%{&modified ? '  + ' : ''}%* %7*"
         .. "%*%{&bt=='nofile' ? '[Nofile]' : expand('%:t')}%* "
         .. "%{&ff!='unix' ? '[' . &ff . '] ' : ''}"
         .. "%{&fenc!='utf-8' && &fenc != '' ? '[' . &fenc . '] ' : ''}"
-        .. (has_lsp and issues == 0 and '✔' or '')
-        .. (issues > 0 and '✘ ' .. issues or '')
+        .. (diag ~= '' and diag .. ' ' or '')
         .. '%='
-        .. (current_win and '%*%{session#status()}%* ' or '')
+        .. "%{&busy ? '◐ ' : ''}"
+        .. (progress ~= '' and progress .. ' ' or '')
+        .. (current_win and '%{session#status()} ' or '')
 end
 
 vim.opt.statusline = "%!v:lua.require'statusline'.statusline()"
@@ -34,7 +35,7 @@ M.tablabel = function(n)
     local modified = ''
     for _, b in ipairs(buflist) do
         if modified ~= '' then break end
-        if vim.api.nvim_buf_get_option(b, 'modified') then
+        if vim.bo[b].modified then
             modified = '+ '
         end
     end
