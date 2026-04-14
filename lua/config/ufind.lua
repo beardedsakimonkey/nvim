@@ -1,6 +1,6 @@
 local ufind = require'ufind'
 local util = require'util'
-local uv = vim.loop
+local uv = vim.uv
 
 local function cfg(t)
     return vim.tbl_deep_extend('keep', t, {
@@ -76,7 +76,7 @@ end
 -- unicode character 'EM SPACE'
 local EM_SPACE = '\226\128\131'
 
-function split_basename(lines)
+local function split_basename(lines)
     return vim.tbl_map(function(line)
         line = line:gsub('^' .. os.getenv'HOME', '~')
         local is_uri = line:find('://') ~= nil
@@ -91,7 +91,7 @@ function split_basename(lines)
     end, lines)
 end
 
-function get_highlights_basename(result)
+local function get_highlights_basename(result)
     if result:find('://') then  -- looks like a URI
         return {}
     end
@@ -102,7 +102,7 @@ function get_highlights_basename(result)
     return {{col_start = endi, col_end = -1, hl_group = 'Comment'}}
 end
 
-function on_complete_basename(action, results)
+local function on_complete_basename(action, results)
     local is_edit = action:match('edit') or action:match('split')
     for i, result in ipairs(results) do
         local found, _, basename, dir  = result:find'^([^:]+)\226\128\131(.*)$'

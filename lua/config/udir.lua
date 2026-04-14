@@ -11,7 +11,7 @@ local function sort_by_mtime(files)
     local mtimes = {}
     for _, file in ipairs(files) do
         --`fs_stat` fails in case of a broken symlink
-        local fstat = vim.loop.fs_stat(cwd .. '/' .. file.name)
+        local fstat = vim.uv.fs_stat(cwd .. '/' .. file.name)
         mtimes[file.name] = fstat and fstat.mtime.sec or 0
     end
     table.sort(files, function(a, b)
