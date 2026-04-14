@@ -3,7 +3,7 @@ local M = {}
 M.statusline = function()
     local current_win = vim.g.statusline_winid == vim.fn.win_getid()
     local buf = vim.api.nvim_win_get_buf(vim.g.statusline_winid)
-    local has_lsp = #vim.lsp.get_active_clients({bufnr = buf}) > 0
+    local has_lsp = #vim.lsp.get_clients({bufnr = buf}) > 0
     local issues = #vim.diagnostic.get(buf, {severity = {min = vim.diagnostic.severity.WARN}})
     return "%1*%{!&modifiable ? '  X ' : &ro ? '  RO ' : ''}"
         .. "%2*%{&modified ? '  + ' : ''}%* %7*"
@@ -13,7 +13,7 @@ M.statusline = function()
         .. (has_lsp and issues == 0 and '✔' or '')
         .. (issues > 0 and '✘ ' .. issues or '')
         .. '%='
-        .. (current_win and  '%*%{session#status()}%* ' or '')
+        .. (current_win and '%*%{session#status()}%* ' or '')
 end
 
 vim.opt.statusline = "%!v:lua.require'statusline'.statusline()"
