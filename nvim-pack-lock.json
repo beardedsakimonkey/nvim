@@ -1,12 +1,8 @@
 {
   "plugins": {
-    "formatter.nvim": {
-      "rev": "b9d7f853da1197b83b8edb4cc4952f7ad3a42e41",
-      "src": "https://github.com/mhartington/formatter.nvim"
-    },
-    "kanagawa.nvim": {
-      "rev": "aef7f5cec0a40dbe7f3304214850c472e2264b10",
-      "src": "https://github.com/rebelot/kanagawa.nvim"
+    "0x96f.nvim": {
+      "rev": "188c2be71a4e046df7cea095ccd61a520ee21249",
+      "src": "https://github.com/0x96f-org/0x96f.nvim"
     },
     "linediff.vim": {
       "rev": "245d16328c47a132574e0fa4298d24a0f78b20b0",
@@ -33,12 +29,8 @@
       "version": "'develop'"
     },
     "nvim-ufind": {
-      "rev": "6d6cbc033bffb4908fc126dd4510f2d5932e6141",
+      "rev": "ad2a5b91ff52a4015d5fcb667c754bb7aca9bf1a",
       "src": "https://github.com/beardedsakimonkey/nvim-ufind"
-    },
-    "vim-abolish": {
-      "rev": "dcbfe065297d31823561ba787f51056c147aa682",
-      "src": "https://github.com/tpope/vim-abolish"
     },
     "vim-jsx-pretty": {
       "rev": "6989f1663cc03d7da72b5ef1c03f87e6ddb70b41",
@@ -47,10 +39,6 @@
     "vim-sleuth": {
       "rev": "be69bff86754b1aa5adcbb527d7fcd1635a84080",
       "src": "https://github.com/tpope/vim-sleuth"
-    },
-    "vim-startuptime": {
-      "rev": "f10474b400c197787a0434548d842a2db583c333",
-      "src": "https://github.com/dstein64/vim-startuptime"
     },
     "wgsl.vim": {
       "rev": "bb6516e0356e81cc10a885e63273ef1d63cc74b1",

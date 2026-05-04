@@ -146,6 +146,7 @@ map('n', '<space>z', zoom_toggle, {silent = true})
 map('x', '.', ':norm! .<CR>', {silent = true})
 map('n', '<space>.', repeat_last_edit)
 map('x', '<space>y', '"*y', {silent = true})
+map('n', '<space>r', '<Cmd>restart<CR>', {silent = true})
 
 -- Command mode
 map('c', '<C-p>', '<Up>')
@@ -216,13 +217,14 @@ map('n', ':V', '<Cmd>e ~/.config/nvim/<CR>', {silent = true})
 map('n', ':L', '<Cmd>e ~/.config/nvim/lua/<CR>', {silent = true})
 map('n', ':C', '<Cmd>e ~/.config/nvim/lua/config/<CR>', {silent = true})
 map('n', ':A', '<Cmd>e ~/.config/nvim/after/ftplugin/<CR>', {silent = true})
-map('n', ':P', '<Cmd>e ~/.local/share/nvim/site/pack/paqs/start/<CR>', {silent = true})
+map('n', ':P', '<Cmd>e ~/.local/share/nvim/site/pack/core/opt/<CR>', {silent = true})
 map('n', ':R', '<Cmd>e $VIMRUNTIME<CR>', {silent = true})
 map('n', ':Z', '<Cmd>e ~/.zshrc<CR>', {silent = true})
 map('n', ':N', '<Cmd>e ~/notes/_notes.md<CR>', {silent = true})
 map('n', ':T', '<Cmd>e ~/notes/_todo.md<CR>', {silent = true})
 map('n', ':X', '<Cmd>e ~/.config/tmux/tmux.conf<CR>', {silent = true})
 map('n', ':U', '<Cmd>e ~/Library/Application\\ Support/Firefox/Profiles/2a6723nr.default-release/user.js<CR>', {silent = true})
+map('n', ':G', '<Cmd>e ~/.config/ghostty/config<CR>', {silent = true})
 
 -- Text objects
 map({'x', 'o'}, 'il', '<Cmd>norm! g_v^<CR>', {silent = true})
@@ -245,8 +247,8 @@ map('n', 'goi', '<Cmd>set ignorecase!<Bar>set ignorecase?<CR>')
 
 -- Diagnostics
 map('n', 'ge', '<Cmd>lua vim.diagnostic.open_float()<CR>', {silent = true})
-map('n', '[e', '<Cmd>lua vim.diagnostic.goto_prev({wrap=false, severity={min=vim.diagnostic.severity.WARN}})<CR>', {silent = true})
-map('n', ']e', '<Cmd>lua vim.diagnostic.goto_next({wrap=false, severity={min=vim.diagnostic.severity.WARN}})<CR>', {silent = true})
+map('n', '[e', '<Cmd>lua vim.diagnostic.jump({count=-1, float=true, wrap=false, severity={min=vim.diagnostic.severity.WARN}})<CR>', {silent = true})
+map('n', ']e', '<Cmd>lua vim.diagnostic.jump({count=1,  float=true, wrap=false, severity={min=vim.diagnostic.severity.WARN}})<CR>', {silent = true})
 map('n', 'gl', '<Cmd>lua vim.diagnostic.setloclist()<CR>', {silent = true})
 
 -- Avoid typo

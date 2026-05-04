@@ -31,17 +31,18 @@ vim.opt.ignorecase = true
 vim.opt.infercase = true
 vim.opt.smartcase = true
 
-vim.opt.completeopt = {'menu'}
+vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
 vim.opt.complete = {'.', 'i'}
 vim.opt.wildmenu = true
 vim.opt.wildignorecase = true
 vim.opt.wildignore = {'*.o', '*/node_modules/*'}
 vim.opt.fileignorecase = false
 
-vim.opt.foldmethod = 'expr'
-vim.opt.foldlevelstart = 99
-vim.opt.foldopen:remove('block')
-vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.opt.foldenable = false
+-- vim.opt.foldmethod = 'expr'
+-- vim.opt.foldlevelstart = 99
+-- vim.opt.foldopen:remove('block')
+-- vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 
 vim.opt.modeline = false
 vim.opt.shortmess = 'filnxtToOfaTWIcFS'

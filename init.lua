@@ -1,5 +1,4 @@
--- Disabling because it breaks :so
-vim.loader.enable()
+-- vim.loader.enable()
 
 -- In $VIMRUNTIME/plugin/
 vim.g.loaded_matchit = 1
@@ -32,7 +31,8 @@ require_safe 'statusline'
 require_safe 'mappings'
 require_safe 'plugins'
 require_safe 'lsp'
+require_safe 'terminal'
 
 -- After setting up globals so they're available to ftplugin / colorscheme files
-vim.cmd 'colorscheme papyrus'
+vim.cmd 'colorscheme 0x96f'
 vim.cmd 'syntax enable'  -- see :h syntax-loading

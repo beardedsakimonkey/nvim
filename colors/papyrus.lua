@@ -1,5 +1,3 @@
--- Color shorthands: $VIMRUNTIME/rgb.txt
-
 vim.cmd 'hi clear'
 vim.opt.background = 'light'
 if vim.fn.exists('syntax_on') == 1 then
@@ -43,6 +41,7 @@ hl('PmenuSel', {bg = 'LightGoldenrod3'})
 hl('StatusLine', {bg = 'MistyRose4', fg = '#CDCABD'})
 hl('StatusLineNC', {bg = '#b2a99d', fg = '#CDCABD'})
 hl('TabLineFill', {bg = 'MistyRose4'})
+hl('TabLineSel', {bg = 'MistyRose4', fg='AntiqueWhite2', bold=0})
 hl('VertSplit', {bg = 'MistyRose4', fg = '#CDCABD'})
 hl('CursorLine', {bg = '#ccc5b5'})
 hl('Underlined', {fg = '#BD00BD', underline = 1})

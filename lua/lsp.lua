@@ -14,13 +14,11 @@ au('LspAttach', '*', function(args)
     -- Note that we *could* still get builtin formatting using gw.
     vim.bo[buf].formatexpr = ''
 
-    vim.lsp.completion.enable(true, args.data.client_id, buf, { autotrigger = true })
-
     local function map(lhs, rhs)
         vim.keymap.set('n', lhs, rhs, {noremap = true, silent = true,
             buffer = buf})
     end
-    vim.keymap.set('i', '<C-Space>', vim.lsp.completion.trigger, {buffer = buf})
+    vim.keymap.set('i', '<C-Space>', '<C-x><C-o>', {buffer = buf})
     -- NOTE: Diagnostic mappings are in mappings.lua because they aren't
     -- necessarily associated with an lsp.
     map('gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>')
@@ -32,42 +30,24 @@ au('LspAttach', '*', function(args)
     map('gr', '<Cmd>lua vim.lsp.buf.rename()<CR>')
     map('ga', '<Cmd>lua vim.lsp.buf.code_action()<CR>')
     map(',f', '<Cmd>lua vim.lsp.buf.format({async=true})<CR>')
+
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client:supports_method('textDocument/completion') then
+        vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
+    end
 end)
+
 
 local definition_handler = function(...)
     vim.lsp.handlers['textDocument/definition'](...)
     vim.cmd 'norm! zz'
 end
 
--- Disabling because goto definition jumps to header file.
--- https://github.com/clangd/clangd/issues/1348
-
--- vim.lsp.config('clangd', {
---     cmd = {'clangd'},
---     filetypes = {'c'},
---     root_markers = {'.clangd', '.clang-format', 'compile_commands.json', 'compile_flags.txt', 'configure.ac'},
---     capabilities = {
---         textDocument = {
---             completion = { editsNearCursor = true },
---         },
---         offsetEncoding = {'utf-8', 'utf-16'},
---     },
---     handlers = { ['textDocument/definition'] = definition_handler },
--- })
--- vim.lsp.enable('clangd')
-
--- vim.lsp.config('rls', {
---     cmd = {'rls'},
---     filetypes = {'rust'},
---     root_markers = {'Cargo.toml'},
---     handlers = { ['textDocument/definition'] = definition_handler },
--- })
--- vim.lsp.enable('rls')
-
 vim.lsp.config('tsserver', {
     cmd = { 'typescript-language-server', '--stdio' },
     filetypes = {'typescript', 'typescriptreact'},
     root_markers = {'tsconfig.json', 'package.json', '.git'},
     handlers = { ['textDocument/definition'] = definition_handler },
+
 })
 vim.lsp.enable('tsserver')

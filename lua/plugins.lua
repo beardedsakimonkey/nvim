@@ -4,23 +4,17 @@ vim.pack.add({
     { src = gh'beardedsakimonkey/nvim-udir',   version = 'develop' },
     gh'beardedsakimonkey/nvim-ufind',
     gh'tpope/vim-sleuth',
-    gh'tpope/vim-abolish',
     { src = gh'kylechui/nvim-surround',        version = '633a0ab03159569a66b65671b0ffb1a6aed6cf18' },
     { src = gh'AndrewRadev/linediff.vim',       version = '245d16328c47a132574e0fa4298d24a0f78b20b0' },
     { src = gh'echasnovski/mini.operators',     version = 'e5f97b0edcd871615fd82339f329794f0e419894' },
     gh'echasnovski/mini.hipatterns',
-    gh'dstein64/vim-startuptime',
-    gh'mhartington/formatter.nvim',
     gh'MaxMEllon/vim-jsx-pretty',
-    gh'rebelot/kanagawa.nvim',
     gh'DingDean/wgsl.vim',
+    gh'0x96f-org/0x96f.nvim',
 })
 
 require_safe 'config.udir'
 require_safe 'config.ufind'
-
--- vim.pack -------------------------------------------------------------------
-com('PackUpdate', function() vim.pack.update() end)
 
 -- linediff -------------------------------------------------------------------
 vim.g.linediff_buffer_type = 'scratch'
@@ -74,20 +68,3 @@ require('mini.operators').setup({
     replace  = { prefix = 'gr' },
     sort     = { prefix = 'gs' }
 })
-
--- formatter.nvim -------------------------------------------------------------
-local futil = require('formatter.util')
-require('formatter').setup{
-    filetype = {
-        typescript = {
-            function()
-                return {
-                    exe = 'dprint',
-                    args = {'fmt', '--stdin', futil.escape_path(futil.get_current_buffer_file_path())},
-                    stdin = true,
-                }
-            end
-        }
-    }
-}
--- aug'my/formatter'('BufWritePost', '*.ts', ':FormatWrite')
