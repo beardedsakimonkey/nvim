@@ -35,6 +35,8 @@ com('Highlight', '<mods> Scratch highlight <args>',
 com('Jumps', '<mods> Scratch jumps', {nargs = 0})
 com('Scriptnames', '<mods> Scratch scriptnames', {nargs = 0})
 
+com('FormatJSON', ':%!jq .')
+
 com('UpdateUserJs', update_userjs)
 com('GithubUrl', github_url)
 com('StripTrailingSpace', '%s/\\s\\+$//e')
