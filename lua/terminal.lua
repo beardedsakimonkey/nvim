@@ -11,12 +11,6 @@ au('TermClose', '*', function(args)
     vim.cmd('bdelete! ' .. args.buf)
 end)
 
-vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], { desc = 'Exit terminal mode' })
-vim.keymap.set('t', '<C-h>', [[<C-\><C-n><C-w>h]])
-vim.keymap.set('t', '<C-j>', [[<C-\><C-n><C-w>j]])
-vim.keymap.set('t', '<C-k>', [[<C-\><C-n><C-w>k]])
-vim.keymap.set('t', '<C-l>', [[<C-\><C-n><C-w>l]])
-
 -- Opens a terminal in a split or switches to an existing one
 local function toggle_terminal()
   local term_buf = nil
@@ -33,4 +27,9 @@ local function toggle_terminal()
   end
 end
 
-vim.keymap.set('n', '<C-t>', toggle_terminal, { desc = 'Toggle terminal split' })
+map('n', '<C-t>', toggle_terminal)
+map('t', '<Esc>', [[<C-\><C-n>]])
+map('t', '<C-h>', [[<C-\><C-n><C-w>h]])
+map('t', '<C-j>', [[<C-\><C-n><C-w>j]])
+map('t', '<C-k>', [[<C-\><C-n><C-w>k]])
+map('t', '<C-l>', [[<C-\><C-n><C-w>l]])
