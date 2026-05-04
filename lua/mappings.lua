@@ -119,6 +119,10 @@ map('n', 'zK', 'zC', {silent = true})
 map('n', 'zj', 'zo', {silent = true})
 map('n', 'zJ', 'zO', {silent = true})
 
+-- Adapted from justinmk's vimrc. Check mode to avoid blockwise selection.
+map('x', 'I', function() return vim.fn.mode():match('[vV]') and '<C-v>^o^I' or 'I' end, {expr = true})
+map('x', 'A', function() return vim.fn.mode():match('[vV]') and '<C-v>0o$A' or 'A' end, {expr = true})
+
 -- Insert mode
 map('i', '<C-j>', '<C-n>')
 map('i', '<C-k>', '<C-p>')

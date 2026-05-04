@@ -36,3 +36,12 @@ require_safe 'terminal'
 -- After setting up globals so they're available to ftplugin / colorscheme files
 vim.cmd 'colorscheme 0x96f'
 vim.cmd 'syntax enable'  -- see :h syntax-loading
+
+-- Set emoji character cell width for:
+--  Left, right, up, down, X, O
+vim.fn.setcellwidths({
+    { 0x2B05, 0x2B07, 2 },
+    { 0x27A1, 0x27A1, 2 },
+    { 0x2612, 0x2612, 2 },
+    { 0x1F17E, 0x1F17E, 2 },
+})
