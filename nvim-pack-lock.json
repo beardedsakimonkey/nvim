@@ -2,21 +2,28 @@
   "plugins": {
     "0x96f.nvim": {
       "rev": "188c2be71a4e046df7cea095ccd61a520ee21249",
-      "src": "https://github.com/0x96f-org/0x96f.nvim"
+      "src": "https://github.com/0x96f-org/0x96f.nvim",
+      "version": "'188c2be71a4e046df7cea095ccd61a520ee21249'"
     },
     "linediff.vim": {
       "rev": "245d16328c47a132574e0fa4298d24a0f78b20b0",
       "src": "https://github.com/AndrewRadev/linediff.vim",
       "version": "'245d16328c47a132574e0fa4298d24a0f78b20b0'"
     },
+    "mini.bufremove": {
+      "rev": "8603490905fdfa31943cf2ede7ef4475e3dbac9a",
+      "src": "https://github.com/echasnovski/mini.bufremove",
+      "version": "'stable'"
+    },
     "mini.hipatterns": {
       "rev": "a3ffba45e4119917b254c372df82e79f7d8c4aad",
-      "src": "https://github.com/echasnovski/mini.hipatterns"
+      "src": "https://github.com/echasnovski/mini.hipatterns",
+      "version": "'stable'"
     },
     "mini.operators": {
       "rev": "e5f97b0edcd871615fd82339f329794f0e419894",
       "src": "https://github.com/echasnovski/mini.operators",
-      "version": "'e5f97b0edcd871615fd82339f329794f0e419894'"
+      "version": "'stable'"
     },
     "nvim-surround": {
       "rev": "633a0ab03159569a66b65671b0ffb1a6aed6cf18",
@@ -34,15 +41,18 @@
     },
     "vim-jsx-pretty": {
       "rev": "6989f1663cc03d7da72b5ef1c03f87e6ddb70b41",
-      "src": "https://github.com/MaxMEllon/vim-jsx-pretty"
+      "src": "https://github.com/MaxMEllon/vim-jsx-pretty",
+      "version": "'6989f1663cc03d7da72b5ef1c03f87e6ddb70b41'"
     },
     "vim-sleuth": {
       "rev": "be69bff86754b1aa5adcbb527d7fcd1635a84080",
-      "src": "https://github.com/tpope/vim-sleuth"
+      "src": "https://github.com/tpope/vim-sleuth",
+      "version": "'be69bff86754b1aa5adcbb527d7fcd1635a84080'"
     },
     "wgsl.vim": {
       "rev": "bb6516e0356e81cc10a885e63273ef1d63cc74b1",
-      "src": "https://github.com/DingDean/wgsl.vim"
+      "src": "https://github.com/DingDean/wgsl.vim",
+      "version": "'bb6516e0356e81cc10a885e63273ef1d63cc74b1'"
     }
   }
 }

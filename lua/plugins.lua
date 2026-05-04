@@ -1,16 +1,19 @@
 local gh = function(x) return 'https://github.com/' .. x end
 
 vim.pack.add({
-    { src = gh'beardedsakimonkey/nvim-udir',   version = 'develop' },
-    gh'beardedsakimonkey/nvim-ufind',
-    gh'tpope/vim-sleuth',
-    { src = gh'kylechui/nvim-surround',        version = '633a0ab03159569a66b65671b0ffb1a6aed6cf18' },
-    { src = gh'AndrewRadev/linediff.vim',       version = '245d16328c47a132574e0fa4298d24a0f78b20b0' },
-    { src = gh'echasnovski/mini.operators',     version = 'e5f97b0edcd871615fd82339f329794f0e419894' },
-    gh'echasnovski/mini.hipatterns',
-    gh'MaxMEllon/vim-jsx-pretty',
-    gh'DingDean/wgsl.vim',
-    gh'0x96f-org/0x96f.nvim',
+    -- Trusted
+    { src = gh'beardedsakimonkey/nvim-udir', version = 'develop' },
+    { src = gh'beardedsakimonkey/nvim-ufind' },
+    -- Untrusted
+    { src = gh'echasnovski/mini.operators',  version = 'stable' },
+    { src = gh'echasnovski/mini.bufremove',  version = 'stable' },
+    { src = gh'echasnovski/mini.hipatterns', version = 'stable' },
+    { src = gh'tpope/vim-sleuth',            version = 'be69bff86754b1aa5adcbb527d7fcd1635a84080' },
+    { src = gh'kylechui/nvim-surround',      version = '633a0ab03159569a66b65671b0ffb1a6aed6cf18' },
+    { src = gh'AndrewRadev/linediff.vim',    version = '245d16328c47a132574e0fa4298d24a0f78b20b0' },
+    { src = gh'MaxMEllon/vim-jsx-pretty',    version = '6989f1663cc03d7da72b5ef1c03f87e6ddb70b41' },
+    { src = gh'DingDean/wgsl.vim',           version = 'bb6516e0356e81cc10a885e63273ef1d63cc74b1' },
+    { src = gh'0x96f-org/0x96f.nvim',        version = '188c2be71a4e046df7cea095ccd61a520ee21249' },
 })
 
 require_safe 'config.udir'
