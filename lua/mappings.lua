@@ -139,7 +139,7 @@ map('', '<C-q>', '<Cmd>q<CR>', {silent = true})
 map('n', '<space>l', '<Cmd>vsplit<CR>', {silent = true})
 map('n', '<space>j', '<Cmd>split<CR>', {silent = true})
 map('n', '<space>t', '<Cmd>tabedit<CR>', {silent = true})
-map('', '<Space>d', '<Cmd>call Kwbd(1)<CR>', {silent = true})
+map('', '<Space>d', function() require'mini.bufremove'.delete() end, {silent = true})
 map('', '<Space>q', '<Cmd>b#<CR>', {silent = true})
 map('n', 'g>', '<Cmd>40messages<CR>', {silent = true})
 map('n', 'gi', 'g`^')  -- go to last insert
