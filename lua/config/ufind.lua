@@ -235,7 +235,7 @@ local function grep(query_str, query_tbl)
         local args = {'--vimgrep', '--fixed-strings', '--color=ansi', '--smart-case', '--'}
         -- pattern matching on the last arg being a path is unreliable (it might
         -- be part of the query), so check if ft is 'udir'
-        if ft == 'udir' and #query_tbl > 1 and util.exists(query_tbl[#query_tbl]) then
+        if #query_tbl > 1 and util.exists(query_tbl[#query_tbl]) then
             -- seperate the path into its own argument
             local path = table.remove(query_tbl)
             table.insert(args, table.concat(query_tbl, ' '))
@@ -253,8 +253,7 @@ local function grep(query_str, query_tbl)
     })
 end
 
-vim.api.nvim_create_user_command('Grep', function(o) grep(o.args, o.fargs) end,
-    {nargs = '+'})
+com('Grep', function(o) grep(o.args, o.fargs) end, {nargs = '+'})
 map('x', '<space>a', '\"vy:Grep <C-r>v<CR>')
 map('n', '<space>a', function()
     local path = ''
