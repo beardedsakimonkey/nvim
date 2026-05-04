@@ -32,6 +32,7 @@ require_safe 'mappings'
 require_safe 'plugins'
 require_safe 'lsp'
 require_safe 'terminal'
+require_safe 'hlsearch'
 
 -- After setting up globals so they're available to ftplugin / colorscheme files
 vim.cmd 'colorscheme 0x96f'

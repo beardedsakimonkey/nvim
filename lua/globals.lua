@@ -26,7 +26,7 @@ _G.com = function(name, command, opts)
 end
 
 _G.aug = function(group)
-    vim.api.nvim_create_augroup(group, {})
+    vim.api.nvim_create_augroup(group, {clear = true})
     local function au(event, pattern, cmd, opts)
         opts = opts or {}
         opts.group = group
