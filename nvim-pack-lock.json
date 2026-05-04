@@ -15,6 +15,11 @@
       "src": "https://github.com/echasnovski/mini.bufremove",
       "version": "'stable'"
     },
+    "mini.diff": {
+      "rev": "fbb93ea1728e7c9d0944df8bd022a68402bd2e7e",
+      "src": "https://github.com/echasnovski/mini.diff",
+      "version": "'stable'"
+    },
     "mini.hipatterns": {
       "rev": "a3ffba45e4119917b254c372df82e79f7d8c4aad",
       "src": "https://github.com/echasnovski/mini.hipatterns",
