@@ -17,7 +17,7 @@ M.statusline = function()
         .. (current_win and '%{session#status()} ' or '')
 end
 
--- vim.opt.statusline = "%!v:lua.require'statusline'.statusline()"
+vim.opt.statusline = "%!v:lua.require'statusline'.statusline()"
 
 M.tabline = function()
     local s = ''
