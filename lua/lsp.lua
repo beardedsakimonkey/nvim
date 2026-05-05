@@ -26,6 +26,7 @@ au('LspAttach', '*', function(args)
     -- The built-in on_attach handler sets this to use the lsp server. But this
     -- means we can't gq on comments. So reset it.
     vim.bo[buf].formatexpr = nil
+    vim.bo[buf].autocomplete = true
 
     local function map(lhs, rhs)
         vim.keymap.set('n', lhs, rhs, {noremap = true, silent = true, buffer = buf})
