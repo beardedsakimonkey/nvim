@@ -31,9 +31,9 @@
       "version": "'stable'"
     },
     "nvim-surround": {
-      "rev": "633a0ab03159569a66b65671b0ffb1a6aed6cf18",
+      "rev": "2e93e154de9ff326def6480a4358bfc149d5da2c",
       "src": "https://github.com/kylechui/nvim-surround",
-      "version": "'633a0ab03159569a66b65671b0ffb1a6aed6cf18'"
+      "version": "'2e93e154de9ff326def6480a4358bfc149d5da2c'"
     },
     "nvim-udir": {
       "rev": "753506ec4d2bbbcd2456e4032018bb776faeca53",

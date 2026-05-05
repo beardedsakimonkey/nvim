@@ -226,7 +226,7 @@ map('n', '<space>o', oldfiles)
 map('n', '<space>f', find)
 map('n', '<space>F', interactive_find)
 map('n', '<space>n', notes)
-map('n', '<space>x', live_grep)
+-- map('n', '<space>x', live_grep)
 map('n', '<space>h', help_grep)
 
 local function grep(query_str, query_tbl)

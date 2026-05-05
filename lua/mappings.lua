@@ -1,4 +1,3 @@
--- Adapted from lacygoill's vimrc
 local function zoom_toggle()
     if vim.fn.winnr('$') ~= 1 then
         if vim.t.zoom_restore then
@@ -12,7 +11,6 @@ local function zoom_toggle()
     end
 end
 
--- Adapted from lacygoill's vimrc
 local function repeat_last_edit()
     local changed = vim.fn.getreg('"', 1, 1)
     if changed then
@@ -28,7 +26,6 @@ local function repeat_last_edit()
     end
 end
 
--- Adapted from lacygoill's vimrc
 local function navigate(dir)
     local prev_win_same_dir -- previous window in same direction
     local cnr = vim.fn.winnr()
@@ -67,7 +64,6 @@ local function yank_doc(exp)
     vim.fn.setreg('+', txt, 'c')
 end
 
--- F/f/T/t
 local function get_char()
     local ok, char_num = pcall(vim.fn.getchar)
     -- Return nil if error (e.g. <C-c>) or for control characters
@@ -154,7 +150,6 @@ map('n', 'zK', 'zC', {silent = true})
 map('n', 'zj', 'zo', {silent = true})
 map('n', 'zJ', 'zO', {silent = true})
 
--- Adapted from justinmk's vimrc
 map('x', 'I', function() return vim.fn.mode():match('[vV]') and '<C-v>^o^I' or 'I' end, {expr = true})
 map('x', 'A', function() return vim.fn.mode():match('[vV]') and '<C-v>0o$A' or 'A' end, {expr = true})
 
@@ -200,7 +195,7 @@ map('n', 'gg', '<Cmd>keepj norm! gg<CR>', {silent = true})
 map('n', 'G', '<Cmd>keepj norm! G<CR>', {silent = true})
 
 -- Search & substitute
--- NOTE: Doesn't support multiline selection. Adapted from lacygoill's vimrc.
+-- NOTE: Doesn't support multiline selection.
 map("x", "*", "\"vy:let @/='\\<<c-r>v\\>'<CR>nzzzv", {silent = true})
 map("x", "#", "\"vy:let @/='\\<<c-r>v\\>'<CR>Nzzzv", {silent = true})
 map("x", "g*", "\"vy:let @/='<c-r>v'<CR>nzzzv", {silent = true})
@@ -228,7 +223,6 @@ map('n', '[t', '<Cmd>tabprev<CR>', {silent = true})
 map('n', ']t', '<Cmd>tabnext<CR>', {silent = true})
 map('n', ']T', '<Cmd>+tabmove<CR>', {silent = true})
 map('n', '[T', '<Cmd>-tabmove<CR>', {silent = true})
--- Adapted from lacygoill's vimrc.
 map('', ']n', '/\\v^[<\\|=>]{7}<CR>zvzz', {silent = true})
 map('', '[n', '?\\v^[<\\|=>]{7}<CR>zvzz', {silent = true})
 local function move_line(dir)
@@ -240,17 +234,14 @@ map('n', '[d', function() move_line'up' end)
 map('n', ']d', function() move_line'down' end)
 
 -- Bookmarks
-map('n', ':V', '<Cmd>e ~/.config/nvim/<CR>', {silent = true})
+map('n', ':V', '<Cmd>e $VIMRUNTIME<CR>', {silent = true})
 map('n', ':L', '<Cmd>e ~/.config/nvim/lua/<CR>', {silent = true})
 map('n', ':C', '<Cmd>e ~/.config/nvim/lua/config/<CR>', {silent = true})
-map('n', ':A', '<Cmd>e ~/.config/nvim/after/ftplugin/<CR>', {silent = true})
 map('n', ':P', '<Cmd>e ~/.local/share/nvim/site/pack/core/opt/<CR>', {silent = true})
-map('n', ':R', '<Cmd>e $VIMRUNTIME<CR>', {silent = true})
 map('n', ':Z', '<Cmd>e ~/.zshrc<CR>', {silent = true})
-map('n', ':N', '<Cmd>e ~/notes/_notes.md<CR>', {silent = true})
-map('n', ':T', '<Cmd>e ~/notes/_todo.md<CR>', {silent = true})
+map('n', ':N', '<Cmd>e ~/notes<CR>', {silent = true})
 map('n', ':X', '<Cmd>e ~/.config/tmux/tmux.conf<CR>', {silent = true})
-map('n', ':U', '<Cmd>e ~/Library/Application\\ Support/Firefox/Profiles/2a6723nr.default-release/user.js<CR>', {silent = true})
+map('n', ':U', '<Cmd>e ' .. fe(require'util'.FF_PROFILE) .. '/user.js<CR>', {silent = true})
 map('n', ':G', '<Cmd>e ~/.config/ghostty/config<CR>', {silent = true})
 
 -- Text objects
@@ -280,7 +271,27 @@ map('n', 'gl', '<Cmd>lua vim.diagnostic.setloclist()<CR>', {silent = true})
 vim.cmd 'cnoreabbrev ~? ~/'
 vim.cmd[[cnoreabbrev <expr> man getcmdtype() is# ":" && getcmdpos() == 4 ? 'vert Man' : 'man']]
 
+-- F/f/T/t
 map({'n', 'x'}, 'f', function() ft('f') end)
 map({'n', 'x'}, 't', function() ft('t') end)
 map({'n', 'x'}, 'F', function() ft('F') end)
 map({'n', 'x'}, 'T', function() ft('T') end)
+
+-- toggle location list
+map('n', '<space>xl', function()
+  local ok, err = pcall(vim.fn.getloclist(0, { winid = 0 }).winid ~= 0 and vim.cmd.lclose or vim.cmd.lopen)
+  if not ok and err then vim.notify(err, vim.log.levels.ERROR) end
+end)
+-- toggle quickfix list
+map('n', '<space>xq', function()
+  local ok, err = pcall(vim.fn.getqflist({ winid = 0 }).winid ~= 0 and vim.cmd.cclose or vim.cmd.copen)
+  if not ok and err then vim.notify(err, vim.log.levels.ERROR) end
+end)
+
+map('n', 'gco', 'o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>', { desc = 'Add Comment Below' })
+map('n', 'gcO', 'O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>', { desc = 'Add Comment Above' })
+
+-- Add undo break-points
+map('i', ',', ',<c-g>u')
+map('i', '.', '.<c-g>u')
+map('i', ';', ';<c-g>u')

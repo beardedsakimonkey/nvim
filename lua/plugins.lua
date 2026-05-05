@@ -10,7 +10,7 @@ vim.pack.add({
     { src = gh'echasnovski/mini.hipatterns', version = 'stable' },
     { src = gh'echasnovski/mini.diff',       version = 'stable' },
     { src = gh'tpope/vim-sleuth',            version = 'be69bff86754b1aa5adcbb527d7fcd1635a84080' },
-    { src = gh'kylechui/nvim-surround',      version = '633a0ab03159569a66b65671b0ffb1a6aed6cf18' },
+    { src = gh'kylechui/nvim-surround',      version = '2e93e154de9ff326def6480a4358bfc149d5da2c' },
     { src = gh'AndrewRadev/linediff.vim',    version = '245d16328c47a132574e0fa4298d24a0f78b20b0' },
     { src = gh'MaxMEllon/vim-jsx-pretty',    version = '6989f1663cc03d7da72b5ef1c03f87e6ddb70b41' },
     { src = gh'DingDean/wgsl.vim',           version = 'bb6516e0356e81cc10a885e63273ef1d63cc74b1' },
