@@ -1,12 +1,12 @@
 local au = aug'my/hlsearch'
 
 local function stop_highlight()
-    if not vim.v.hlsearch or vim.api.nvim_get_mode().mode ~= 'n' then
+    if not vim.v.hlsearch or vim.api.nvim_get_mode().mode:sub(1, 1) ~= 'n' then
         return
     end
 
     vim.schedule(function()
-        if vim.v.hlsearch and vim.api.nvim_get_mode().mode == 'n' then
+        if vim.v.hlsearch and vim.api.nvim_get_mode().mode:sub(1, 1) == 'n' then
             vim.cmd.nohlsearch()
         end
     end)
