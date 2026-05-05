@@ -1,6 +1,6 @@
 vim.opt.termguicolors = true
 vim.opt.shada = "!,'1024,<0,s8,:128,/8,@8,f0,h,r/tmp,rterm:,rman:"
-vim.opt.sessionoptions = {'help', 'tabpages', 'winsize', 'curdir', 'folds'}
+vim.opt.sessionoptions = {'help', 'tabpages', 'winsize', 'curdir'}
 
 vim.opt.ttimeoutlen = 0  -- avoid confusing <esc>-key with <a-…>
 vim.opt.timeoutlen = 3000
@@ -38,11 +38,12 @@ vim.opt.wildignorecase = true
 vim.opt.wildignore = {'*.o', '*/node_modules/*'}
 vim.opt.fileignorecase = false
 
-vim.opt.foldenable = false
--- vim.opt.foldmethod = 'expr'
--- vim.opt.foldlevelstart = 99
--- vim.opt.foldopen:remove('block')
--- vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.opt.foldenable = true
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.opt.foldlevel = 99 -- fixes folds closed on nvim startup
+vim.opt.foldlevelstart = 99
+vim.opt.foldopen:remove('block')
 
 vim.opt.modeline = false
 vim.opt.shortmess = 'filnxtToOfaTWIcFS'
