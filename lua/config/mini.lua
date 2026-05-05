@@ -75,11 +75,16 @@ map({'n', 'x'}, '<space>gs', '<Cmd>lua MiniGit.show_at_cursor()<CR>')
 map({'n', 'x'}, '<space>gh', '<Cmd>lua MiniGit.show_range_history()<CR>')
 map({'n', 'x'}, '<space>gd', '<Cmd>lua MiniGit.show_diff_source()<CR>')
 map('n', '<space>gc', '<Cmd>vert Git commit -a<CR>')
-map('n', '<space>gb', '<Cmd>leftabove vertical resize 45 Git blame %<CR>')
+map('n', '<space>gb', '<Cmd>leftabove vert Git blame %<CR>')
 map('n', '<space>gl', '<Cmd>vert Git log<CR>')
 
 au('User', 'MiniGitCommandSplit', function(au_data)
     if au_data.data.git_subcommand ~= 'blame' then return end
+
+    vim.api.nvim_win_call(au_data.data.win_stdout, function()
+        vim.cmd('vertical resize 45')
+        vim.wo.winfixwidth = true
+    end)
 
     -- Align blame output with source
     local win_src = au_data.data.win_source
