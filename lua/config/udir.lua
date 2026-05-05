@@ -21,11 +21,10 @@ udir.config = {
         L = "<Cmd>lcd %<CR>",
     },
     is_file_hidden = function(file, files)
-        return false
-        -- return vim.endswith(file.name, '.o')
-        --     or file.name == '.git'
+        return file.name == '.git'
     end,
     show_hidden_files = false,
+    sync_local_cwd = true,
 }
 
 map('n', '-', '<Cmd>Udir<CR>')

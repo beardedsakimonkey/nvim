@@ -257,7 +257,7 @@ map('n', 'yo', function() yank_doc('%:t:r:r:r') end, {silent = true})
 map('n', 'yO', function() yank_doc('%:p') end, {silent = true})
 
 -- Toggle options
-map('n', 'gon', '<Cmd>set number!<CR>', {silent = true})
+-- map('n', 'gon', '<Cmd>set number!<CR>', {silent = true})
 map('n', 'goc', '<Cmd>set cursorline!<CR>', {silent = true})
 map('n', 'gol', '<Cmd>set list!<CR>', {silent = true})
 map('n', 'gow', '<Cmd>set wrap!<Bar>set wrap?<CR>')
@@ -290,8 +290,3 @@ end)
 
 map('n', 'gco', 'o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>', { desc = 'Add Comment Below' })
 map('n', 'gcO', 'O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>', { desc = 'Add Comment Above' })
-
--- Add undo break-points
-map('i', ',', ',<c-g>u')
-map('i', '.', '.<c-g>u')
-map('i', ';', ';<c-g>u')
