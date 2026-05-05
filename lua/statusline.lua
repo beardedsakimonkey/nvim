@@ -1,19 +1,10 @@
 local M = {}
+local default_statusline = vim.o.statusline
 
 M.statusline = function()
     local current_win = vim.g.statusline_winid == vim.fn.win_getid()
-    local buf = vim.api.nvim_win_get_buf(vim.g.statusline_winid)
-    local diag = vim.diagnostic.status(buf)
-    local progress = package.loaded['vim.ui'] and vim.ui.progress_status() or ''
-    return "%1*%{!&modifiable ? '  X ' : &ro ? '  RO ' : ''}"
-        .. "%2*%{&modified ? '  + ' : ''}%* %7*"
-        .. "%*%{&bt=='nofile' ? '[Nofile]' : expand('%:t')}%* "
-        .. "%{&ff!='unix' ? '[' . &ff . '] ' : ''}"
-        .. "%{&fenc!='utf-8' && &fenc != '' ? '[' . &fenc . '] ' : ''}"
-        .. (diag ~= '' and diag .. ' ' or '')
-        .. '%='
-        .. "%{&busy ? '◐ ' : ''}"
-        .. (progress ~= '' and progress .. ' ' or '')
+    return "" --"%#DiffAdd#%{&modified ? '  + ' : ''}%* "
+        .. default_statusline
         .. (current_win and '%{session#status()} ' or '')
 end
 
