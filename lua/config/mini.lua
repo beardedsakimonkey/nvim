@@ -74,7 +74,7 @@ require('mini.git').setup()
 map({'n', 'x'}, '<space>gs', '<Cmd>lua MiniGit.show_at_cursor()<CR>')
 map({'n', 'x'}, '<space>gh', '<Cmd>lua MiniGit.show_range_history()<CR>')
 map({'n', 'x'}, '<space>gd', '<Cmd>lua MiniGit.show_diff_source()<CR>')
-map('n', '<space>gc', '<Cmd>vert Git commit -a<CR>')
+map('n', '<space>gc', '<Cmd>silent vert Git commit -a<CR>')
 map('n', '<space>gb', '<Cmd>leftabove vert Git blame %<CR>')
 map('n', '<space>gl', '<Cmd>vert Git log<CR>')
 
