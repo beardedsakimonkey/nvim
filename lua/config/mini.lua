@@ -71,7 +71,14 @@ map('n', 'god', function() require'mini.diff'.toggle_overlay() end)
 -- mini.git -------------------------------------------------------------------
 require('mini.git').setup()
 
-local align_blame = function(au_data)
+map({'n', 'x'}, '<space>gs', '<Cmd>lua MiniGit.show_at_cursor()<CR>')
+map({'n', 'x'}, '<space>gh', '<Cmd>lua MiniGit.show_range_history()<CR>')
+map({'n', 'x'}, '<space>gd', '<Cmd>lua MiniGit.show_diff_source()<CR>')
+map('n', '<space>gc', '<Cmd>vert Git commit -a<CR>')
+map('n', '<space>gb', '<Cmd>vert Git blame %<CR>')
+map('n', '<space>gl', '<Cmd>vert Git log<CR>')
+
+au('User', 'MiniGitCommandSplit', function(au_data)
     if au_data.data.git_subcommand ~= 'blame' then return end
 
     -- Align blame output with source
@@ -82,14 +89,4 @@ local align_blame = function(au_data)
 
     -- Bind both windows so that they scroll together
     vim.wo[win_src].scrollbind, vim.wo.scrollbind = true, true
-end
-
--- au('User', 'MiniGitCommandSplit', align_blame)
-vim.api.nvim_create_autocmd('User', {
-    pattern = 'MiniGitCommandSplit',
-    callback = align_blame,
-})
-
-map({'n', 'x'}, '<space>gs', '<Cmd>lua MiniGit.show_at_cursor()<CR>')
-map({'n', 'x'}, '<space>gr', '<Cmd>lua MiniGit.show_range_history()<CR>')
-map({'n', 'x'}, '<space>gd', '<Cmd>lua MiniGit.show_diff_source()<CR>')
+end)

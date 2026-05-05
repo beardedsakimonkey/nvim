@@ -1,10 +1,28 @@
 local M = {}
 local default_statusline = vim.o.statusline
 
+local escape_statusline = function(s)
+    return s:gsub('%%', '%%%%')
+end
+
+M.git_status = function()
+    local winid = vim.g.statusline_winid
+    if type(winid) ~= 'number' or not vim.api.nvim_win_is_valid(winid) then
+        return ''
+    end
+
+    local bufnr = vim.api.nvim_win_get_buf(winid)
+    local summary = vim.b[bufnr].minigit_summary_string
+    if summary == nil or summary == '' then return '' end
+
+    return escape_statusline(summary) .. ' '
+end
+
 M.statusline = function()
     local current_win = vim.g.statusline_winid == vim.fn.win_getid()
     return "" --"%#DiffAdd#%{&modified ? '  + ' : ''}%* "
         .. default_statusline
+        .. M.git_status()
         .. (current_win and '%{session#status()} ' or '')
 end
 
