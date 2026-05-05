@@ -19,8 +19,6 @@ au('LspAttach', '*', function(args)
             buffer = buf})
     end
     vim.keymap.set('i', '<C-Space>', '<C-x><C-o>', {buffer = buf})
-    -- NOTE: Diagnostic mappings are in mappings.lua because they aren't
-    -- necessarily associated with an lsp.
     map('gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>')
     map('gd', '<Cmd>lua vim.lsp.buf.definition()<CR>')
     map('gh', '<Cmd>lua vim.lsp.buf.hover()<CR>')
@@ -48,6 +46,5 @@ vim.lsp.config('tsserver', {
     filetypes = {'typescript', 'typescriptreact'},
     root_markers = {'tsconfig.json', 'package.json', '.git'},
     handlers = { ['textDocument/definition'] = definition_handler },
-
 })
 vim.lsp.enable('tsserver')

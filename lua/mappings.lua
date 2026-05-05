@@ -67,6 +67,41 @@ local function yank_doc(exp)
     vim.fn.setreg('+', txt, 'c')
 end
 
+-- F/f/T/t
+local function get_char()
+    local ok, char_num = pcall(vim.fn.getchar)
+    -- Return nil if error (e.g. <C-c>) or for control characters
+    if not ok or type(char_num) ~= 'number' or char_num < 32 then
+        return nil
+    end
+    return vim.fn.nr2char(char_num)
+end
+
+local function gen_hash(key)
+    local win = vim.api.nvim_get_current_win()
+    local cursor = vim.api.nvim_win_get_cursor(0)
+    -- Note: ignore `key`s casing so that we can change direction
+    return ('%s|%s|%s:%s'):format(key:lower(), win, cursor[1], cursor[2])
+end
+
+local prev_hash
+
+-- Supports repeating the last search with f/t/F/T instead of ;/,
+local function ft(key)
+    local hash = gen_hash(key)
+    local is_forward = key == 'f' or key == 't'
+    if hash == prev_hash then
+        vim.cmd('normal! ' .. (is_forward and ';' or ','))
+    else
+        local char = get_char()
+        if not char then
+            return
+        end
+        vim.cmd('normal! ' .. key .. char)
+    end
+    prev_hash = gen_hash(key)
+end
+
 -- Enhanced defaults
 map('n', 'j', 'gj')
 map('n', 'k', 'gk')
@@ -119,7 +154,7 @@ map('n', 'zK', 'zC', {silent = true})
 map('n', 'zj', 'zo', {silent = true})
 map('n', 'zJ', 'zO', {silent = true})
 
--- Adapted from justinmk's vimrc. Check mode to avoid blockwise selection.
+-- Adapted from justinmk's vimrc
 map('x', 'I', function() return vim.fn.mode():match('[vV]') and '<C-v>^o^I' or 'I' end, {expr = true})
 map('x', 'A', function() return vim.fn.mode():match('[vV]') and '<C-v>0o$A' or 'A' end, {expr = true})
 
@@ -128,11 +163,9 @@ map('i', '<C-j>', '<C-n>')
 map('i', '<C-k>', '<C-p>')
 map('i', '<C-l>', '<C-n>')
 
-
 -- Miscellaneous
 map('n', 'cn', 'cgn', {silent = true})
 map({'n', 'x'}, 'Z', 'zzzH')
-map('n', 'Q', '@q')
 map('n', '<A-LeftMouse>', '<nop>')
 map('n', '<CR>', '<Cmd>w<CR>', {silent = true})
 map('', '<C-q>', '<Cmd>q<CR>', {silent = true})
@@ -191,20 +224,10 @@ map('n', '<A-j>', '<C-w>J')
 map('n', '<A-k>', '<C-w>K')
 
 -- Bracket
-map('n', ']b', '<Cmd>bnext<CR>', {silent = true})
-map('n', '[b', '<Cmd>bprev<CR>', {silent = true})
 map('n', '[t', '<Cmd>tabprev<CR>', {silent = true})
 map('n', ']t', '<Cmd>tabnext<CR>', {silent = true})
 map('n', ']T', '<Cmd>+tabmove<CR>', {silent = true})
 map('n', '[T', '<Cmd>-tabmove<CR>', {silent = true})
-map('n', ']q', ':<C-u><C-r>=v:count1<CR>cnext<CR>zz', {silent = true})
-map('n', '[q', ':<C-u><C-r>=v:count1<CR>cprev<CR>zz', {silent = true})
-map('n', ']Q', '<Cmd>cnfile<CR>zz', {silent = true})
-map('n', '[Q', '<Cmd>cpfile<CR>zz', {silent = true})
-map('n', ']l', ':<C-u><c-r>=v:count1<CR>lnext<CR>zz', {silent = true})
-map('n', '[l', ':<C-u><c-r>=v:count1<CR>lprev<CR>zz', {silent = true})
-map('n', ']L', '<Cmd>lnfile<CR>zz', {silent = true})
-map('n', '[L', '<Cmd>lpfile<CR>zz', {silent = true})
 -- Adapted from lacygoill's vimrc.
 map('', ']n', '/\\v^[<\\|=>]{7}<CR>zvzz', {silent = true})
 map('', '[n', '?\\v^[<\\|=>]{7}<CR>zvzz', {silent = true})
@@ -251,48 +274,11 @@ map('n', 'goi', '<Cmd>set ignorecase!<Bar>set ignorecase?<CR>')
 
 -- Diagnostics
 map('n', 'ge', '<Cmd>lua vim.diagnostic.open_float()<CR>', {silent = true})
-map('n', '[e', '<Cmd>lua vim.diagnostic.jump({count=-1, float=true, wrap=false, severity={min=vim.diagnostic.severity.WARN}})<CR>', {silent = true})
-map('n', ']e', '<Cmd>lua vim.diagnostic.jump({count=1,  float=true, wrap=false, severity={min=vim.diagnostic.severity.WARN}})<CR>', {silent = true})
 map('n', 'gl', '<Cmd>lua vim.diagnostic.setloclist()<CR>', {silent = true})
 
 -- Avoid typo
 vim.cmd 'cnoreabbrev ~? ~/'
 vim.cmd[[cnoreabbrev <expr> man getcmdtype() is# ":" && getcmdpos() == 4 ? 'vert Man' : 'man']]
-
--- F/f/T/t
-local function get_char()
-    local ok, char_num = pcall(vim.fn.getchar)
-    -- Return nil if error (e.g. <C-c>) or for control characters
-    if not ok or type(char_num) ~= 'number' or char_num < 32 then
-        return nil
-    end
-    return vim.fn.nr2char(char_num)
-end
-
-local function gen_hash(key)
-    local win = vim.api.nvim_get_current_win()
-    local cursor = vim.api.nvim_win_get_cursor(0)
-    -- Note: ignore `key`s casing so that we can change direction
-    return ('%s|%s|%s:%s'):format(key:lower(), win, cursor[1], cursor[2])
-end
-
-local prev_hash
-
--- Supports repeating the last search with f/t/F/T instead of ;/,
-local function ft(key)
-    local hash = gen_hash(key)
-    local is_forward = key == 'f' or key == 't'
-    if hash == prev_hash then
-        vim.cmd('normal! ' .. (is_forward and ';' or ','))
-    else
-        local char = get_char()
-        if not char then
-            return
-        end
-        vim.cmd('normal! ' .. key .. char)
-    end
-    prev_hash = gen_hash(key)
-end
 
 map({'n', 'x'}, 'f', function() ft('f') end)
 map({'n', 'x'}, 't', function() ft('t') end)

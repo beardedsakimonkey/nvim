@@ -230,11 +230,8 @@ map('n', '<space>x', live_grep)
 map('n', '<space>h', help_grep)
 
 local function grep(query_str, query_tbl)
-    local ft = vim.bo.ft
     local function cmd()
         local args = {'--vimgrep', '--fixed-strings', '--color=ansi', '--smart-case', '--'}
-        -- pattern matching on the last arg being a path is unreliable (it might
-        -- be part of the query), so check if ft is 'udir'
         if #query_tbl > 1 and util.exists(query_tbl[#query_tbl]) then
             -- seperate the path into its own argument
             local path = table.remove(query_tbl)

@@ -7,7 +7,7 @@ local function handle_large_buffer()
     end
 end
 
-local function setup_fo()
+local function setup_formatoptions()
     vim.opt.fo = vim.opt.fo
         + 'j' -- remove comment leader joining lines
         + 'c' -- auto-wrap comments
@@ -51,38 +51,15 @@ local function fast_theme()
     end
 end
 
-local function edit_url()
-    local abuf = tonumber(vim.fn.expand'<abuf>') or 0
-    vim.bo[abuf].buftype = 'nofile'
-    local url = vim.fn.expand'<afile>':gsub(
-        '^https://github%.com/(.-)/blob/(.*)',
-        'https://raw.githubusercontent.com/%1/%2'
-    )
-    local function on_stdout(chunk)
-        vim.schedule(function()
-            local lines = vim.api.nvim_buf_get_lines(abuf, 0, 1, false)
-            local is_empty = #lines == 1 and lines[1] == ''
-            vim.api.nvim_buf_set_lines(abuf, is_empty and 0 or -1, -1, true,
-                vim.split(chunk, '\n'))
-        end)
-    end
-    require'ufind.util'.spawn('curl',
-        {'--location', '--silent', '--show-error', url}, on_stdout)
-end
-
 local au = aug'my/autocmds'
-
 au('BufReadPre', '*', handle_large_buffer)
 au('BufRead', {'.bash_history', '.zsh_history'}, 'setlocal noundofile')
-au('FileType', '*', setup_fo)
+au('FileType', '*', setup_formatoptions)
 au('BufWritePost', '*.lua', source_lua)
 au('BufWritePost', '*/.config/nvim/plugin/*.vim', 'source <afile>:p')
 au('BufWritePost', '*tmux.conf', source_tmux)
 au('BufWritePost', 'user-overrides.js', update_user_js)
 au('BufWritePost', '*/.zsh/overlay.ini', fast_theme)
-au('BufNewFile', {'http://*', 'https://*'}, edit_url)
 au('VimResized', '*', 'wincmd =')
 au({'FocusGained', 'BufEnter'}, '*', 'checktime')
 au('TextYankPost', '*', function() vim.highlight.on_yank{on_visual = false} end)
-au('TermOpen', '*', 'set nonumber | startinsert')
-au('TermClose', '*', "exec 'bd! ' .. expand('<abuf>')")

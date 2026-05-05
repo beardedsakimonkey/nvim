@@ -37,3 +37,5 @@ require_safe 'hlsearch'
 -- After setting up globals so they're available to ftplugin / colorscheme files
 vim.cmd 'colorscheme 0x96f'
 vim.cmd 'syntax enable'  -- see :h syntax-loading
+
+require'vim._core.ui2'.enable({enable = true})
