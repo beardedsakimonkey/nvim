@@ -11,7 +11,7 @@
       "version": "'245d16328c47a132574e0fa4298d24a0f78b20b0'"
     },
     "mini.bufremove": {
-      "rev": "8603490905fdfa31943cf2ede7ef4475e3dbac9a",
+      "rev": "10857aa39160c127694151828914df3131ba83b6",
       "src": "https://github.com/echasnovski/mini.bufremove",
       "version": "'stable'"
     },
@@ -21,12 +21,12 @@
       "version": "'stable'"
     },
     "mini.hipatterns": {
-      "rev": "a3ffba45e4119917b254c372df82e79f7d8c4aad",
+      "rev": "add8d8abad602787377ec5d81f6b248605828e0f",
       "src": "https://github.com/echasnovski/mini.hipatterns",
       "version": "'stable'"
     },
     "mini.operators": {
-      "rev": "e5f97b0edcd871615fd82339f329794f0e419894",
+      "rev": "6df2fd410afd55ebd87757345031fc0af0c95068",
       "src": "https://github.com/echasnovski/mini.operators",
       "version": "'stable'"
     },

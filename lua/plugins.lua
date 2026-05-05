@@ -16,7 +16,6 @@ vim.pack.add({
     { src = gh'DingDean/wgsl.vim',           version = 'bb6516e0356e81cc10a885e63273ef1d63cc74b1' },
     { src = gh'0x96f-org/0x96f.nvim',        version = '188c2be71a4e046df7cea095ccd61a520ee21249' },
 })
-
 require_safe 'config.udir'
 require_safe 'config.ufind'
 require_safe 'config.mini'
