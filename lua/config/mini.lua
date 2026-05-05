@@ -49,6 +49,12 @@ require('mini.operators').make_mappings(
 )
 
 -- mini.diff ------------------------------------------------------------------
+
+--[[
+    - `vip` followed by `gh` / `gH` applies/resets hunks inside current paragraph. Same can be achieved in operator form `ghip` / `gHip`, which has the advantage of being dot-repeatable.
+    - `ghgh` / `gHgh` applies/resets hunk under cursor.
+    - `dgh` deletes hunk under cursor.
+--]]
 require('mini.diff').setup({
   mappings = {
     apply = 'gh',
@@ -63,8 +69,27 @@ require('mini.diff').setup({
 map('n', 'god', function() require'mini.diff'.toggle_overlay() end)
 
 -- mini.git -------------------------------------------------------------------
-require('mini.git').setup({
-    command = {
-        split = 'auto',
-    },
+require('mini.git').setup()
+
+local align_blame = function(au_data)
+    if au_data.data.git_subcommand ~= 'blame' then return end
+
+    -- Align blame output with source
+    local win_src = au_data.data.win_source
+    vim.wo.wrap = false
+    vim.fn.winrestview({ topline = vim.fn.line('w0', win_src) })
+    vim.api.nvim_win_set_cursor(0, { vim.fn.line('.', win_src), 0 })
+
+    -- Bind both windows so that they scroll together
+    vim.wo[win_src].scrollbind, vim.wo.scrollbind = true, true
+end
+
+-- au('User', 'MiniGitCommandSplit', align_blame)
+vim.api.nvim_create_autocmd('User', {
+    pattern = 'MiniGitCommandSplit',
+    callback = align_blame,
 })
+
+map({'n', 'x'}, '<space>gs', '<Cmd>lua MiniGit.show_at_cursor()<CR>')
+map({'n', 'x'}, '<space>gr', '<Cmd>lua MiniGit.show_range_history()<CR>')
+map({'n', 'x'}, '<space>gd', '<Cmd>lua MiniGit.show_diff_source()<CR>')

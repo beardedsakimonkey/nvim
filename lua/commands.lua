@@ -26,19 +26,16 @@ local function open_github_url()
     end
 end
 
-local function restart_with_session(opts)
-    local cmd = 'restart'
-    local session = vim.g.MY_LAST_SESSION
-    if session and session ~= '' then
-        cmd = cmd .. ' SLoad ' .. session
+local function restart_with_session()
+    if vim.g.my_session and vim.g.MY_LAST_SESSION then
+        vim.cmd('restart SLoad ' .. vim.g.MY_LAST_SESSION)
     end
-    vim.cmd(cmd)
+    vim.cmd('restart')
 end
 
 com('FormatJSON', ':%!jq .')
-
+com('StripTrailingSpace', '%s/\\s\\+$//e')
 com('UpdateUserJs', update_userjs)
 com('OpenGithubUrl', open_github_url)
-com('StripTrailingSpace', '%s/\\s\\+$//e')
-com('Restart', restart_with_session, { nargs = '*' })
+com('Restart', restart_with_session)
 com('TSPlayground', 'InspectTree')
