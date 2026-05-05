@@ -252,6 +252,7 @@ end
 
 com('Grep', function(o) grep(o.args, o.fargs) end, {nargs = '+'})
 map('x', '<space>a', '\"vy:Grep <C-r>v<CR>')
+
 map('n', '<space>a', function()
     local path = ''
     if vim.bo.ft == 'udir' then
@@ -261,3 +262,4 @@ map('n', '<space>a', function()
     end
     return ':<C-u>Grep ' .. path
 end, {expr = true})
+-- map('n', '<space>a', ':<C-u>Grep ', {expr = true})

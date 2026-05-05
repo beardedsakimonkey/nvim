@@ -18,7 +18,7 @@ local function enable_hipatterns(opts)
     })
 end
 
-local au = aug'my/hipatterns'
+local au = aug'my/mini'
 au('BufEnter', {'papyrus.lua', 'rgb.txt', '*.css'}, function(opts)
     -- Highlight hexadecimal colors
     color_map = color_map or vim.tbl_map(
@@ -50,11 +50,6 @@ require('mini.operators').make_mappings(
 
 -- mini.diff ------------------------------------------------------------------
 require('mini.diff').setup({
-  view = {
-    style = vim.go.number and 'number' or 'sign',
-    signs = { add = '▒', change = '▒', delete = '▒' },
-    priority = 199,
-  },
   mappings = {
     apply = 'gh',
     reset = 'gH',
@@ -66,3 +61,10 @@ require('mini.diff').setup({
   },
 })
 map('n', 'god', function() require'mini.diff'.toggle_overlay() end)
+
+-- mini.git -------------------------------------------------------------------
+require('mini.git').setup({
+    command = {
+        split = 'auto',
+    },
+})

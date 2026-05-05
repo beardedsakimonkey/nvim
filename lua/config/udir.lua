@@ -18,6 +18,7 @@ udir.config = {
         r = "<Cmd>lua require'udir.core'.move()<CR>",
         c = "<Cmd>lua require'udir.core'.copy()<CR>",
         gh = "<Cmd>lua require'udir.core'.toggle_hidden_files()<CR>",
+        L = "<Cmd>lcd %<CR>",
     },
     is_file_hidden = function(file, files)
         return false

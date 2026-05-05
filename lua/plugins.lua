@@ -9,6 +9,7 @@ vim.pack.add({
     { src = gh'echasnovski/mini.bufremove',  version = 'stable' },
     { src = gh'echasnovski/mini.hipatterns', version = 'stable' },
     { src = gh'echasnovski/mini.diff',       version = 'stable' },
+    { src = gh'echasnovski/mini-git',        version = 'stable' },
     { src = gh'tpope/vim-sleuth',            version = 'be69bff86754b1aa5adcbb527d7fcd1635a84080' },
     { src = gh'kylechui/nvim-surround',      version = '2e93e154de9ff326def6480a4358bfc149d5da2c' },
     { src = gh'AndrewRadev/linediff.vim',    version = '245d16328c47a132574e0fa4298d24a0f78b20b0' },

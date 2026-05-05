@@ -10,6 +10,11 @@
       "src": "https://github.com/AndrewRadev/linediff.vim",
       "version": "'245d16328c47a132574e0fa4298d24a0f78b20b0'"
     },
+    "mini-git": {
+      "rev": "832467238636e3dfa1db76de929996b6668c35ef",
+      "src": "https://github.com/echasnovski/mini-git",
+      "version": "'stable'"
+    },
     "mini.bufremove": {
       "rev": "10857aa39160c127694151828914df3131ba83b6",
       "src": "https://github.com/echasnovski/mini.bufremove",
