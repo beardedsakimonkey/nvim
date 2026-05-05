@@ -43,6 +43,23 @@ end
 
 _G.map = vim.keymap.set
 
+-- NOTE: possible race condition if the plugin initializes asynchronously
+_G.stub_com = function(cmd, pack, opts)
+    vim.api.nvim_create_user_command(cmd, function()
+        vim.api.nvim_del_user_command(cmd)
+        vim.cmd('pa ' .. pack)
+        vim.cmd(cmd)
+    end, opts or {})
+end
+
+_G.stub_map = function(mode, lhs, pack)
+    vim.keymap.set(mode, lhs, function()
+        vim.keymap.del(mode, lhs)
+        vim.cmd('pa ' .. pack)
+        vim.api.nvim_input(lhs)
+    end)
+end
+
 -- Convert snake_case to PascalCase
 -- Ex: `:s/\w\+/\=v:lua.cc(submatch(0))/g`
 _G.cc = function(str)

@@ -21,11 +21,13 @@ require_safe 'config.udir'
 require_safe 'config.ufind'
 require_safe 'config.mini'
 
+-- Neovim ---------------------------------------------------------------------
+stub_com('Undotree', 'nvim.undotree')
+stub_com('DiffTool', 'nvim.difftool', {nargs = '*', complete = 'file'})
+
 -- linediff -------------------------------------------------------------------
 vim.g.linediff_buffer_type = 'scratch'
 map('x', 'D', "mode() is# 'V' ? ':Linediff<cr>' : 'D'", {expr = true})
 
 -- nvim-surround --------------------------------------------------------------
-require'nvim-surround'.setup{
-    indent_lines = false,
-}
+require'nvim-surround'.setup({ indent_lines = false })
