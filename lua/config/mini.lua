@@ -65,3 +65,4 @@ require('mini.diff').setup({
     goto_last = ']H',
   },
 })
+map('n', 'god', function() require'mini.diff'.toggle_overlay() end)
