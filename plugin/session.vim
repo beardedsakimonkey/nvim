@@ -115,7 +115,7 @@ fu s:load(session_file) abort
     elseif !filereadable(session_file)
         return 'echoerr '..string(printf("%s doesn't exist, or it's not readable", fnamemodify(session_file, ':t')))
     elseif exists('g:my_session') && session_file is# g:my_session
-        return 'echoerr '..string(printf('%s is already the current session', fnamemodify(session_file, ':t')))
+        "return 'echoerr '..string(printf('%s is already the current session', fnamemodify(session_file, ':t')))
     endif
 
     call s:prepare_restoration(session_file)

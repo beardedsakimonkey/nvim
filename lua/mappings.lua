@@ -183,7 +183,7 @@ map('n', '<space>z', zoom_toggle, {silent = true})
 map('x', '.', ':norm! .<CR>', {silent = true})
 map('n', '<space>.', repeat_last_edit)
 map('x', '<space>y', '"*y', {silent = true})
-map('n', '<space>r', '<Cmd>restart<CR>', {silent = true})
+map('n', '<space>r', '<Cmd>Restart<CR>', {silent = true})
 
 -- Command mode
 map('c', '<C-p>', '<Up>')

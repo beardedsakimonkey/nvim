@@ -26,11 +26,21 @@ local function open_github_url()
     end
 end
 
+local function restart_with_session(opts)
+    local cmd = 'restart'
+    local session = vim.g.MY_LAST_SESSION
+    if session and session ~= '' then
+        cmd = cmd .. ' SLoad ' .. session
+    end
+    vim.cmd(cmd)
+end
+
 com('FormatJSON', ':%!jq .')
 
 com('UpdateUserJs', update_userjs)
 com('OpenGithubUrl', open_github_url)
 com('StripTrailingSpace', '%s/\\s\\+$//e')
+com('Restart', restart_with_session, { nargs = '*' })
 
 -- vim.pack -------------------------------------------------------------
 com('PackUpdate', function(opts)
