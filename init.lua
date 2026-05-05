@@ -34,7 +34,6 @@ require_safe 'lsp'
 require_safe 'terminal'
 require_safe 'hlsearch'
 require_safe 'pack'
-require_safe 'git'
 
 -- After setting up globals so they're available to ftplugin / colorscheme files
 vim.cmd 'colorscheme 0x96f'
