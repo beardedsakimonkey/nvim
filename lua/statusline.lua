@@ -60,7 +60,7 @@ M.git_status = function()
     -- Git status
     local diff = git_diff_summary(bufnr)
     if diff ~= '' then
-        table.insert(parts, diff)
+        table.insert(parts, ' ' .. diff)
     end
 
     return table.concat(parts, ' ') .. ' '
@@ -85,7 +85,6 @@ M.setup_highlights = function()
     vim.api.nvim_set_hl(0, 'StatusLineSession', {link = 'OkMsg'})
     vim.api.nvim_set_hl(0, 'StatusLineGitBranch', {link = 'Directory'})
     vim.api.nvim_set_hl(0, 'StatusLineGitBranchModified', {link = 'WarningMsg'})
-    vim.api.nvim_set_hl(0, 'StatusLineGitStatus', {link = 'WarningMsg'})
     vim.api.nvim_set_hl(0, 'StatusLineGitAdd', {link = 'OkMsg'})
     vim.api.nvim_set_hl(0, 'StatusLineGitChange', {link = 'WarningMsg'})
     vim.api.nvim_set_hl(0, 'StatusLineGitDelete', {link = 'ErrorMsg'})
