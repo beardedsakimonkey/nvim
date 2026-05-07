@@ -44,6 +44,9 @@ au('LspAttach', '*', function(args)
     -- map('grx', '<Cmd>lua vim.lsp.codelens.run()<CR>')
     map('g0', '<Cmd>lua vim.lsp.buf.document_symbol()<CR>')
 
+    map(']e', '<Cmd>lua vim.diagnostic.jump({count=1, float=true})<CR>')
+    map('[e', '<Cmd>lua vim.diagnostic.jump({count=-1, float=true})<CR>')
+
     local client = vim.lsp.get_client_by_id(args.data.client_id)
     if client:supports_method('textDocument/completion') then
         vim.lsp.completion.enable(true, client.id, buf, { autotrigger = true })
@@ -63,3 +66,16 @@ vim.lsp.config('tsserver', {
     handlers = { ['textDocument/definition'] = definition_handler },
 })
 vim.lsp.enable('tsserver')
+
+vim.lsp.config('lua_ls', {
+    cmd = { 'lua-language-server' },
+    filetypes = { 'lua' },
+    root_markers = { { '.luarc.json', '.luarc.jsonc' }, '.git' },
+    settings = {
+        Lua = {
+            runtime = { version = 'LuaJIT' },
+            diagnostics = { globals = {'vim'} },
+        },
+    }
+})
+vim.lsp.enable('lua_ls')

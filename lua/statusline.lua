@@ -13,19 +13,6 @@ local component = function(hl, text)
     return '%#' .. hl .. '#' .. escape_statusline(text) .. '%*'
 end
 
-local git_status_label = function(status)
-    if type(status) ~= 'string' or status:find('%S') == nil then return '' end
-    if status == '??' then return '?' end
-
-    local labels = {}
-    local index, worktree = status:sub(1, 1), status:sub(2, 2)
-
-    if index ~= ' ' then table.insert(labels, 'i:' .. index) end
-    if worktree ~= ' ' then table.insert(labels, 'w:' .. worktree) end
-
-    return table.concat(labels, ' ')
-end
-
 local git_diff_summary = function(bufnr)
     local summary = vim.b[bufnr].minidiff_summary
     if type(summary) ~= 'table' or summary.n_ranges == nil then return '' end
