@@ -1,6 +1,7 @@
 vim.opt.termguicolors = true
 vim.opt.shada = "!,'1024,<0,s8,:128,/8,@8,f0,h,r/tmp,rterm:,rman:"
 vim.opt.sessionoptions = {'help', 'tabpages', 'winsize', 'curdir'}
+vim.opt.mousemodel = 'extend'
 
 vim.opt.ttimeoutlen = 0  -- avoid confusing <esc>-key with <a-…>
 vim.opt.timeoutlen = 3000

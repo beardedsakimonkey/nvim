@@ -59,7 +59,7 @@ require('mini.diff').setup({
   mappings = {
     apply = 'gh',
     reset = 'gH',
-    textobject = 'h',
+    textobject = 'gh',
     goto_first = '[H',
     goto_prev = '[h',
     goto_next = ']h',

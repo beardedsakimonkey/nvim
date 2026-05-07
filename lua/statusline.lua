@@ -1,6 +1,10 @@
 local M = {}
 local default_statusline = vim.o.statusline
 
+local function hl(name, val)
+    vim.api.nvim_set_hl(0, name, val)
+end
+
 local escape_statusline = function(s)
     return tostring(s):gsub('%%', '%%%%'):gsub('[\r\n]', ' ')
 end
@@ -82,12 +86,12 @@ end
 vim.opt.statusline = "%!v:lua.require'statusline'.statusline()"
 
 M.setup_highlights = function()
-    vim.api.nvim_set_hl(0, 'StatusLineSession', {link = 'OkMsg'})
-    vim.api.nvim_set_hl(0, 'StatusLineGitBranch', {link = 'Directory'})
-    vim.api.nvim_set_hl(0, 'StatusLineGitBranchModified', {link = 'WarningMsg'})
-    vim.api.nvim_set_hl(0, 'StatusLineGitAdd', {link = 'OkMsg'})
-    vim.api.nvim_set_hl(0, 'StatusLineGitChange', {link = 'WarningMsg'})
-    vim.api.nvim_set_hl(0, 'StatusLineGitDelete', {link = 'ErrorMsg'})
+    hl('StatusLineSession', {link = 'WarningMsg'})
+    hl('StatusLineGitBranch', {link = 'Directory'})
+    hl('StatusLineGitBranchModified', {link = 'WarningMsg'})
+    hl('StatusLineGitAdd', {link = 'OkMsg'})
+    hl('StatusLineGitChange', {link = 'WarningMsg'})
+    hl('StatusLineGitDelete', {link = 'ErrorMsg'})
 end
 M.setup_highlights()
 aug'my/statusline'('ColorScheme', '*', M.setup_highlights)

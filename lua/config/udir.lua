@@ -19,6 +19,7 @@ udir.config = {
         c = "<Cmd>lua require'udir.core'.copy()<CR>",
         gh = "<Cmd>lua require'udir.core'.toggle_hidden_files()<CR>",
         L = "<Cmd>lcd %<CR>",
+        ['<Tab>'] = "<Cmd>lua require'udir.core'.toggle_mark()<CR>",
     },
     is_file_hidden = function(file, files)
         return file.name == '.git'

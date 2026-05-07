@@ -35,6 +35,4 @@ end
 
 com('PackUpdate', function() vim.pack.update(nil, { force = true }) end)
 com('PackList',   function() vim.pack.update(nil, { offline = true }) end)
-
-local au = aug'my/pack'
-au('VimEnter', '*', function() vim.schedule(prompt_delete_inactive_plugins) end)
+com('PackClean',  prompt_delete_inactive_plugins)
