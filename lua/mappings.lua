@@ -272,10 +272,10 @@ vim.cmd 'cnoreabbrev ~? ~/'
 vim.cmd[[cnoreabbrev <expr> man getcmdtype() is# ":" && getcmdpos() == 4 ? 'vert Man' : 'man']]
 
 -- F/f/T/t
-map({'n', 'x'}, 'f', function() ft('f') end)
-map({'n', 'x'}, 't', function() ft('t') end)
-map({'n', 'x'}, 'F', function() ft('F') end)
-map({'n', 'x'}, 'T', function() ft('T') end)
+map({'n','x'}, 'f', function() ft('f') end)
+map({'n','x'}, 't', function() ft('t') end)
+map({'n','x'}, 'F', function() ft('F') end)
+map({'n','x'}, 'T', function() ft('T') end)
 
 -- toggle location list
 map('n', '<space>xl', function()
@@ -293,3 +293,4 @@ map('n', 'gcO', 'O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>', { desc = 'Add Commen
 
 -- right mouse to highlight
 map('n', '<2-RightMouse>', '<RightMouse>')
+map({'n','x'}, 'Q', '<ignore>')

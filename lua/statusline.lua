@@ -87,11 +87,11 @@ vim.opt.statusline = "%!v:lua.require'statusline'.statusline()"
 
 M.setup_highlights = function()
     hl('StatusLineSession', {link = 'WarningMsg'})
-    hl('StatusLineGitBranch', {link = 'Directory'})
+    hl('StatusLineGitBranch', {fg_indexed = true, ctermfg = 13})
     hl('StatusLineGitBranchModified', {link = 'WarningMsg'})
-    hl('StatusLineGitAdd', {link = 'OkMsg'})
-    hl('StatusLineGitChange', {link = 'WarningMsg'})
-    hl('StatusLineGitDelete', {link = 'ErrorMsg'})
+    hl('StatusLineGitAdd', {link = 'Added'})
+    hl('StatusLineGitChange', {link = 'Changed'})
+    hl('StatusLineGitDelete', {link = 'Removed'})
 end
 M.setup_highlights()
 aug'my/statusline'('ColorScheme', '*', M.setup_highlights)
