@@ -31,7 +31,7 @@ local git_diff_summary = function(bufnr)
     return table.concat(parts, ' ')
 end
 
-M.git_status = function()
+local function git_status()
     local winid = vim.g.statusline_winid
     if type(winid) ~= 'number' or not vim.api.nvim_win_is_valid(winid) then
         return ''
@@ -57,17 +57,38 @@ M.git_status = function()
     return table.concat(parts, ' ') .. ' '
 end
 
-M.session_status = function()
+local function session_status()
     local status = vim.fn['session#status']()
     if status == '' then return '' end
     return component('StatusLineSession', status) .. ' '
 end
 
+local diagnostic_levels = {
+    {vim.diagnostic.severity.ERROR, 'DiagnosticUnderlineError'},
+    {vim.diagnostic.severity.WARN,  'DiagnosticUnderlineWarn'},
+    {vim.diagnostic.severity.INFO,  'DiagnosticUnderlineInfo'},
+    {vim.diagnostic.severity.HINT,  'DiagnosticUnderlineHint'},
+}
+
+-- LSP diagnostics
+vim.diagnostic.config({
+    status = {format = function(counts)
+        local parts = {}
+        for _, level in ipairs(diagnostic_levels) do
+            local count = counts[level[1]]
+            if count ~= nil and count > 0 then
+                table.insert(parts, component(level[2], count))
+            end
+        end
+        return table.concat(parts, ' ')
+    end},
+})
+
 M.statusline = function()
     local current_win = vim.g.statusline_winid == vim.fn.win_getid()
     return default_statusline
-        .. (current_win and M.session_status() or '')
-        .. (current_win and M.git_status() or '')
+        .. (current_win and session_status() or '')
+        .. (current_win and git_status() or '')
 end
 
 vim.opt.statusline = "%!v:lua.require'statusline'.statusline()"
