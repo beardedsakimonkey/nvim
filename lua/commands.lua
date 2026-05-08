@@ -7,17 +7,23 @@ end
 
 local function open_github_url()
     local ok, res = pcall(function()
-        local remote_out = vim.fn.system('git remote get-url --push origin')
-        assert(vim.v.shell_error == 0, 'Not in a git repo?\n' .. remote_out)
-        local remote = remote_out
-                        :gsub('\n$', '')
-                        :gsub('.git$', '')
+        local function git(args, err)
+            local out = vim.fn.system(vim.list_extend({'git'}, args))
+            assert(vim.v.shell_error == 0, (err and err .. '\n' or '') .. out)
+            return out:gsub('%s+$', '')
+        end
+        local remote = git({'remote', 'get-url', '--push', 'origin'}, 'Not in a git repo?')
+                        :gsub('%.git$', '')
                         :gsub('^git@github%.com:', 'https://github.com/')
-        local root = vim.fs.find('.git', {upward = true, type = 'directory'})[1]
-        local root_len = #root - 3 -- exclude trailing ".git"
-        local branch = vim.fn.system('git branch --show-current'):match('%S+')
-        return remote .. '/blob/' .. branch .. '/'
-            .. vim.fn.expand('%:p'):sub(root_len)
+        local root = git({'rev-parse', '--show-toplevel'})
+        local ref = git({'branch', '--show-current'})
+        if ref == '' then
+            ref = git({'rev-parse', 'HEAD'})
+        end
+        local fname = vim.fn.expand('%:p')
+        local relpath = assert(vim.fs.relpath(root, fname),
+            'Current file is not inside git root: ' .. fname)
+        return remote .. '/blob/' .. ref .. '/' .. relpath
     end)
     if not ok then
         vim.notify(res, vim.log.levels.WARN)

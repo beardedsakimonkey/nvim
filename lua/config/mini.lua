@@ -57,13 +57,13 @@ require('mini.operators').make_mappings(
 --]]
 require('mini.diff').setup({
   mappings = {
-    apply = 'gh',
-    reset = 'gH',
-    textobject = 'gh',
-    goto_first = '[H',
-    goto_prev = '[h',
-    goto_next = ']h',
-    goto_last = ']H',
+    apply = 'gc',
+    reset = 'gC',
+    textobject = 'gc',
+    goto_first = '[C',
+    goto_prev = '[c',
+    goto_next = ']c',
+    goto_last = ']C',
   },
 })
 map('n', 'god', function() require'mini.diff'.toggle_overlay() vim.api.nvim_feedkeys('zz', 'n', true) end)

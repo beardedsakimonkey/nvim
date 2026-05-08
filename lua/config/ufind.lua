@@ -137,8 +137,16 @@ local function basename_cfg(t)
     })
 end
 
+local function oldfiles_source()
+    return vim.tbl_filter(function(fname)
+        return fname
+            and vim.fn.empty(vim.fn.glob(vim.fn.fnameescape(fname))) == 0
+            and vim.fn.isdirectory(fname) == 0
+    end, vim.v.oldfiles)
+end
+
 local function oldfiles()
-    ufind.open(split_basename(require'ufind.source.oldfiles'()), basename_cfg{})
+    ufind.open(split_basename(oldfiles_source()), basename_cfg{})
 end
 
 local function buffers()
