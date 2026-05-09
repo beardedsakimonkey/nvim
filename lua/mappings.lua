@@ -98,6 +98,21 @@ local function ft(key)
     prev_hash = gen_hash(key)
 end
 
+local function move_line(dir)
+    vim.cmd 'keepj norm! mv'
+    vim.cmd('move ' .. (dir == 'up' and '--' or '+') .. vim.v.count1)
+    vim.cmd 'keepj norm! =`v'
+end
+
+local function cabbrev(short, long)
+    -- NOTE: using `map` causes weird behavior when typing a command
+    vim.cmd(string.format(
+        [[cnoreabbrev <expr> %s getcmdtype() is# ":" && getcmdpos() == %d ? '%s' : '%s']],
+        short, #short+1, long, short))
+end
+
+-------------------------------------------------------------------------------
+
 -- Enhanced defaults
 map('n', 'j', 'gj')
 map('n', 'k', 'gk')
@@ -126,6 +141,9 @@ map('n', '<PageUp>', '<PageUp>:keepj norm! H<CR>', {silent = true})
 map('n', '<PageDown>', '<PageDown>:keepj norm! L<CR>', {silent = true})
 map('n', '/', '/\\V')
 map('x', '/', function() vim.api.nvim_input('/\\%V') end) -- search in visual selection
+map('x', 'I', function() return vim.fn.mode():match('[vV]') and '<C-v>^o^I' or 'I' end, {expr = true})
+map('x', 'A', function() return vim.fn.mode():match('[vV]') and '<C-v>0o$A' or 'A' end, {expr = true})
+
 
 -- Rearrange some default mappings
 map({'n', 'x'}, ';', ':')
@@ -149,9 +167,7 @@ map('n', 'zk', 'zc', {silent = true})
 map('n', 'zK', 'zC', {silent = true})
 map('n', 'zj', 'zo', {silent = true})
 map('n', 'zJ', 'zO', {silent = true})
-
-map('x', 'I', function() return vim.fn.mode():match('[vV]') and '<C-v>^o^I' or 'I' end, {expr = true})
-map('x', 'A', function() return vim.fn.mode():match('[vV]') and '<C-v>0o$A' or 'A' end, {expr = true})
+map({'n','x'}, 'q', '<NOP>') -- avoid accidental macros
 
 -- Insert mode
 map('i', '<C-j>', '<C-n>')
@@ -203,6 +219,7 @@ map("x", "g#", "\"vy:let @/='<c-r>v'<CR>Nzzzv", {silent = true})
 map("n", "g/", ":<c-u>let @/='\\<<c-r>=expand(\"<cword>\")<CR>\\>'<CR>:set hls<CR>", {silent = true})
 map("x", "g/", "\"vy:let @/='<c-r>v'<Bar>set hls<CR>")
 map({"n", "x"}, "<RightMouse>", "<leftmouse>:<c-u>let @/='\\<<c-r>=expand(\"<cword>\")<CR>\\>'<CR>:set hls<CR>", {silent = true})
+map('n', '<2-RightMouse>', '<RightMouse>')
 map("n", "<Space>s", "ms:<C-u>%s///g<left><left>")
 map("x", "<space>s", "\"vy:let @/='<c-r>v'<CR>:<C-u>%s///g<left><left>")
 map('n', 'R', rename)
@@ -225,18 +242,12 @@ map('n', ']T', '<Cmd>+tabmove<CR>', {silent = true})
 map('n', '[T', '<Cmd>-tabmove<CR>', {silent = true})
 map('', ']n', '/\\v^[<\\|=>]{7}<CR>zvzz', {silent = true})
 map('', '[n', '?\\v^[<\\|=>]{7}<CR>zvzz', {silent = true})
-local function move_line(dir)
-    vim.cmd 'keepj norm! mv'
-    vim.cmd('move ' .. (dir == 'up' and '--' or '+') .. vim.v.count1)
-    vim.cmd 'keepj norm! =`v'
-end
 map('n', '[d', function() move_line'up' end)
 map('n', ']d', function() move_line'down' end)
 
 -- Bookmarks
 map('n', ':V', '<Cmd>e $VIMRUNTIME<CR>', {silent = true})
-map('n', ':L', '<Cmd>e ~/.config/nvim/lua/<CR>', {silent = true})
-map('n', ':C', '<Cmd>e ~/.config/nvim/lua/config/<CR>', {silent = true})
+map('n', ':C', '<Cmd>e ~/.config/nvim/lua/<CR>', {silent = true})
 map('n', ':P', '<Cmd>e ~/.local/share/nvim/site/pack/core/opt/<CR>', {silent = true})
 map('n', ':Z', '<Cmd>e ~/.zshrc<CR>', {silent = true})
 map('n', ':N', '<Cmd>e ~/notes<CR>', {silent = true})
@@ -257,7 +268,7 @@ map('n', 'yo', function() yank_doc('%:t:r:r:r') end, {silent = true})
 map('n', 'yO', function() yank_doc('%:p') end, {silent = true})
 
 -- Toggle options
--- map('n', 'gon', '<Cmd>set number!<CR>', {silent = true})
+map('n', 'gon', '<Cmd>set number!<CR>', {silent = true})
 map('n', 'goc', '<Cmd>set cursorline!<CR>', {silent = true})
 map('n', 'gol', '<Cmd>set list!<CR>', {silent = true})
 map('n', 'gow', '<Cmd>set wrap!<Bar>set wrap?<CR>')
@@ -267,30 +278,19 @@ map('n', 'goi', '<Cmd>set ignorecase!<Bar>set ignorecase?<CR>')
 map('n', 'ge', '<Cmd>lua vim.diagnostic.open_float()<CR>', {silent = true})
 map('n', 'gl', '<Cmd>lua vim.diagnostic.setloclist()<CR>', {silent = true})
 
--- Avoid typo
-vim.cmd 'cnoreabbrev ~? ~/'
-vim.cmd[[cnoreabbrev <expr> man getcmdtype() is# ":" && getcmdpos() == 4 ? 'vert Man' : 'man']]
-
 -- F/f/T/t
-map({'n','x'}, 'f', function() ft('f') end)
-map({'n','x'}, 't', function() ft('t') end)
-map({'n','x'}, 'F', function() ft('F') end)
-map({'n','x'}, 'T', function() ft('T') end)
+map({'n','x'}, 'f', function() ft'f' end)
+map({'n','x'}, 't', function() ft't' end)
+map({'n','x'}, 'F', function() ft'F' end)
+map({'n','x'}, 'T', function() ft'T' end)
 
--- toggle location list
-map('n', '<space>xl', function()
-  local ok, err = pcall(vim.fn.getloclist(0, { winid = 0 }).winid ~= 0 and vim.cmd.lclose or vim.cmd.lopen)
-  if not ok and err then vim.notify(err, vim.log.levels.ERROR) end
-end)
--- toggle quickfix list
-map('n', '<space>xq', function()
-  local ok, err = pcall(vim.fn.getqflist({ winid = 0 }).winid ~= 0 and vim.cmd.cclose or vim.cmd.copen)
-  if not ok and err then vim.notify(err, vim.log.levels.ERROR) end
-end)
+-- Quickfix/location list
+map('n', '<space>xq', function() if vim.fn.getqflist({ winid = 0 }).winid ~= 0 then vim.cmd.cclose() else vim.cmd.copen() end end)
+map('n', '<space>xl', function() if vim.fn.getloclist(0, { winid = 0 }).winid ~= 0 then vim.cmd.lclose() else vim.cmd.lopen() end end)
 
-map('n', 'gco', 'o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>', { desc = 'Add Comment Below' })
-map('n', 'gcO', 'O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>', { desc = 'Add Comment Above' })
+-- Command-mode abbreviations
+cabbrev('man', 'vert Man')
+cabbrev('git', 'Git')
+cabbrev('g', 'Git')
 
--- right mouse to highlight
-map('n', '<2-RightMouse>', '<RightMouse>')
-map({'n','x'}, 'Q', '<ignore>')
+map('n', 'gcu', 'gcgc', { remap = true })

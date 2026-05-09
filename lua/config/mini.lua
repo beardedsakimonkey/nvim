@@ -57,17 +57,76 @@ require('mini.operators').make_mappings(
 --]]
 require('mini.diff').setup({
   mappings = {
-    apply = 'gc',
-    reset = 'gC',
-    textobject = 'gc',
-    goto_first = '[C',
-    goto_prev = '[c',
-    goto_next = ']c',
-    goto_last = ']C',
+    apply = 'gh',
+    reset = 'gH',
+    textobject = 'gh',
+    goto_first = '[H',
+    goto_prev = '[h',
+    goto_next = ']h',
+    goto_last = ']H',
   },
 })
 map('n', 'god', function() require'mini.diff'.toggle_overlay() vim.api.nvim_feedkeys('zz', 'n', true) end)
 map('n', 'gon', function() require'mini.diff'.toggle_overlay() vim.api.nvim_feedkeys('zz', 'n', true) end)
+
+local function open_git_diff_hunks()
+    local diff = require'mini.diff'
+    local root = vim.fn.systemlist({'git', 'rev-parse', '--show-toplevel'})[1]
+    if vim.v.shell_error ~= 0 or root == nil or root == '' then
+        vim.notify('Not in a git repository', vim.log.levels.WARN)
+        return
+    end
+
+    local files = vim.fn.systemlist({'git', '-C', root, 'diff', '--name-only'})
+    if vim.v.shell_error ~= 0 then
+        vim.notify('git diff failed', vim.log.levels.ERROR)
+        return
+    end
+    if #files == 0 then
+        vim.notify('No changed files', vim.log.levels.INFO)
+        return
+    end
+
+    local bufs = {}
+    for _, file in ipairs(files) do
+        local path = root .. '/' .. file
+        local buf = vim.fn.bufnr(path, true)
+        vim.bo[buf].buflisted = true
+        vim.fn.bufload(buf)
+        diff.enable(buf)
+        table.insert(bufs, buf)
+    end
+
+    local function export_hunks(attempt)
+        local pending = vim.tbl_filter(function(buf)
+            local data = diff.get_buf_data(buf)
+            return data ~= nil and data.ref_text == nil
+        end, bufs)
+
+        if #pending > 0 and attempt < 20 then
+            vim.defer_fn(function() export_hunks(attempt + 1) end, 50)
+            return
+        end
+
+        local wanted = {}
+        for _, buf in ipairs(bufs) do
+            wanted[buf] = true
+        end
+        local items = vim.tbl_filter(function(item)
+            return wanted[item.bufnr]
+        end, diff.export('qf', { scope = 'all' }))
+        vim.fn.setqflist({}, ' ', { title = 'Git diff hunks', items = items })
+        if #items == 0 then
+            vim.notify('No hunks found', vim.log.levels.INFO)
+        else
+            vim.cmd('copen')
+        end
+    end
+
+    export_hunks(0)
+end
+
+map('n', '<space>gq', open_git_diff_hunks)
 
 -- mini.git -------------------------------------------------------------------
 require('mini.git').setup()

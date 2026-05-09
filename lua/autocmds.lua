@@ -52,14 +52,14 @@ local function fast_theme()
 end
 
 local function set_diagnostic_undercurl()
-    local function hl(name)
+    local function update_hl(name)
         vim.api.nvim_set_hl(0, name, {undercurl = true, update = true})
     end
-    hl('DiagnosticUnderlineError')
-    hl('DiagnosticUnderlineWarn')
-    hl('DiagnosticUnderlineInfo')
-    hl('DiagnosticUnderlineHint')
-    hl('DiagnosticUnderlineOk')
+    update_hl('DiagnosticUnderlineError')
+    update_hl('DiagnosticUnderlineWarn')
+    update_hl('DiagnosticUnderlineInfo')
+    update_hl('DiagnosticUnderlineHint')
+    update_hl('DiagnosticUnderlineOk')
 end
 
 local au = aug'my/autocmds'
@@ -73,5 +73,5 @@ au('BufWritePost', 'user-overrides.js', update_user_js)
 au('BufWritePost', '*/.zsh/overlay.ini', fast_theme)
 au('VimResized', '*', 'wincmd =')
 au({'FocusGained', 'BufEnter'}, '*', 'checktime')
-au('TextYankPost', '*', function() vim.highlight.on_yank{on_visual = false} end)
+au('TextYankPost', '*', function() vim.highlight.on_yank{on_visual = true} end)
 au('ColorScheme', '*', set_diagnostic_undercurl)

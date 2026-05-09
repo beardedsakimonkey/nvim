@@ -2,7 +2,7 @@ local gh = function(x) return 'https://github.com/' .. x end
 
 vim.pack.add({
     -- Trusted
-    { src = gh'beardedsakimonkey/nvim-udir', version = 'develop' },
+    { src = gh'beardedsakimonkey/nvim-dirtree' },
     { src = gh'beardedsakimonkey/nvim-ufind' },
     -- Untrusted
     { src = gh'echasnovski/mini.operators',  version = 'stable' },

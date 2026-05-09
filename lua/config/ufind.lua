@@ -260,14 +260,4 @@ end
 
 com('Grep', function(o) grep(o.args, o.fargs) end, {nargs = '+'})
 map('x', '<space>a', '\"vy:Grep <C-r>v<CR>')
-
-map('n', '<space>a', function()
-    local path = ''
-    if vim.bo.ft == 'udir' then
-        -- can't rely on % because sometimes the bufname has '[1]'
-        local cwd = vim.fn.fnameescape(require'udir.store'.get().cwd)
-        path = " " .. cwd .. string.rep('<Left>', #cwd + 1)
-    end
-    return ':<C-u>Grep ' .. path
-end, {expr = true})
--- map('n', '<space>a', ':<C-u>Grep ', {expr = true})
+map('n', '<space>a', ':<C-u>Grep ')

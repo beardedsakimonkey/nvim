@@ -35,6 +35,10 @@
       "src": "https://github.com/echasnovski/mini.operators",
       "version": "'stable'"
     },
+    "nvim-dirtree": {
+      "rev": "8f307b0a765b13175a7eefc70c3d437ec773c402",
+      "src": "git@github.com:beardedsakimonkey/nvim-dirtree.git"
+    },
     "nvim-surround": {
       "rev": "2e93e154de9ff326def6480a4358bfc149d5da2c",
       "src": "https://github.com/kylechui/nvim-surround",
