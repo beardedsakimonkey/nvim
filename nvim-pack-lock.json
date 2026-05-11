@@ -37,17 +37,12 @@
     },
     "nvim-dirtree": {
       "rev": "8f307b0a765b13175a7eefc70c3d437ec773c402",
-      "src": "git@github.com:beardedsakimonkey/nvim-dirtree.git"
+      "src": "https://github.com/beardedsakimonkey/nvim-dirtree"
     },
     "nvim-surround": {
       "rev": "2e93e154de9ff326def6480a4358bfc149d5da2c",
       "src": "https://github.com/kylechui/nvim-surround",
       "version": "'2e93e154de9ff326def6480a4358bfc149d5da2c'"
-    },
-    "nvim-udir": {
-      "rev": "753506ec4d2bbbcd2456e4032018bb776faeca53",
-      "src": "https://github.com/beardedsakimonkey/nvim-udir",
-      "version": "'develop'"
     },
     "nvim-ufind": {
       "rev": "ad2a5b91ff52a4015d5fcb667c754bb7aca9bf1a",

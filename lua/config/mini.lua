@@ -133,11 +133,13 @@ require('mini.git').setup()
 
 map({'n', 'x'}, '<space>gs', '<Cmd>lua MiniGit.show_at_cursor()<CR>')
 map({'n', 'x'}, '<space>gh', '<Cmd>lua MiniGit.show_range_history()<CR>')
-map({'n', 'x'}, '<space>gd', '<Cmd>lua MiniGit.show_diff_source()<CR>')
+-- map({'n', 'x'}, '<space>gd', '<Cmd>lua MiniGit.show_diff_source()<CR>')
 
 map('n', '<space>gc', '<Cmd>silent vert Git commit -a<CR>')
+map('n', '<space>gC', '<Cmd>silent vert Git commit --amend --reuse-message=HEAD<CR>')
 map('n', '<space>gb', '<Cmd>leftabove vert Git blame %<CR>')
 map('n', '<space>gl', '<Cmd>vert Git log<CR>')
+map('n', '<space>gd', '<Cmd>Git diff<CR>')
 
 au('User', 'MiniGitCommandSplit', function(au_data)
     if au_data.data.git_subcommand ~= 'blame' then return end

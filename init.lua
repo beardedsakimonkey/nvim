@@ -19,7 +19,7 @@ vim.g.loaded_ruby_provider = 1
 function _G.require_safe(mod)
     local ok, msg = xpcall(function() return require(mod) end, debug.traceback)
     if not ok then
-        vim.api.nvim_err_writeln(('Error requiring %s: %s'):format(mod, msg))
+        vim.api.nvim_echo(('Error requiring %s: %s'):format(mod, msg), true, {err=true})
     end
 end
 

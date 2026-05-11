@@ -62,6 +62,11 @@ local function set_diagnostic_undercurl()
     update_hl('DiagnosticUnderlineOk')
 end
 
+local function set_window_separator()
+    vim.api.nvim_set_hl(0, 'WinSeparator', {link = 'Comment', update = true})
+    vim.api.nvim_set_hl(0, 'VertSplit', {link = 'Comment', update = true})
+end
+
 local au = aug'my/autocmds'
 au('BufReadPre', '*', handle_large_buffer)
 au('BufRead', {'.bash_history', '.zsh_history'}, 'setlocal noundofile')
@@ -75,3 +80,5 @@ au('VimResized', '*', 'wincmd =')
 au({'FocusGained', 'BufEnter'}, '*', 'checktime')
 au('TextYankPost', '*', function() vim.highlight.on_yank{on_visual = true} end)
 au('ColorScheme', '*', set_diagnostic_undercurl)
+au('ColorScheme', '*', set_window_separator)
+set_window_separator()
