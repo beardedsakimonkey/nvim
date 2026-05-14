@@ -5,6 +5,18 @@
       "src": "https://github.com/0x96f-org/0x96f.nvim",
       "version": "'188c2be71a4e046df7cea095ccd61a520ee21249'"
     },
+    "awesome-vim-colorschemes": {
+      "rev": "ae5e02298c8de6a5aa98fe4d29a21874cfcc3619",
+      "src": "https://github.com/rafi/awesome-vim-colorschemes"
+    },
+    "dracula.nvim": {
+      "rev": "ae752c13e95fb7c5f58da4b5123cb804ea7568ee",
+      "src": "https://github.com/mofiqul/dracula.nvim"
+    },
+    "kanagawa.nvim": {
+      "rev": "bb85e4bfc8d89b0e62c8fa53ccdd13d12e2f77b3",
+      "src": "https://github.com/rebelot/kanagawa.nvim"
+    },
     "linediff.vim": {
       "rev": "245d16328c47a132574e0fa4298d24a0f78b20b0",
       "src": "https://github.com/AndrewRadev/linediff.vim",
@@ -35,6 +47,22 @@
       "src": "https://github.com/echasnovski/mini.operators",
       "version": "'stable'"
     },
+    "monokai-pro.nvim": {
+      "rev": "2eb6fe008dcabb5c2d37978fe34f36bb318a2a96",
+      "src": "https://github.com/loctvl842/monokai-pro.nvim"
+    },
+    "neovim": {
+      "rev": "6a961effd67f6130d36df6d1c05c48c739796dd2",
+      "src": "https://github.com/rose-pine/neovim"
+    },
+    "nord.nvim": {
+      "rev": "80c1e5321505aeb22b7a9f23eb82f1e193c12470",
+      "src": "https://github.com/shaunsingh/nord.nvim"
+    },
+    "nvim": {
+      "rev": "426dbebe06b5c69fd846ceb17b42e12f890aedf1",
+      "src": "https://github.com/catppuccin/nvim"
+    },
     "nvim-dirtree": {
       "rev": "8f307b0a765b13175a7eefc70c3d437ec773c402",
       "src": "https://github.com/beardedsakimonkey/nvim-dirtree"
@@ -47,6 +75,14 @@
     "nvim-ufind": {
       "rev": "ad2a5b91ff52a4015d5fcb667c754bb7aca9bf1a",
       "src": "https://github.com/beardedsakimonkey/nvim-ufind"
+    },
+    "tokyonight.nvim": {
+      "rev": "cdc07ac78467a233fd62c493de29a17e0cf2b2b6",
+      "src": "https://github.com/folke/tokyonight.nvim"
+    },
+    "vim-colors-xcode": {
+      "rev": "2329a3ed092b4f72e9361a94567a5431e36e7d9c",
+      "src": "https://github.com/lunacookies/vim-colors-xcode"
     },
     "vim-jsx-pretty": {
       "rev": "6989f1663cc03d7da72b5ef1c03f87e6ddb70b41",

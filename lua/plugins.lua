@@ -16,10 +16,26 @@ vim.pack.add({
     { src = gh'MaxMEllon/vim-jsx-pretty',    version = '6989f1663cc03d7da72b5ef1c03f87e6ddb70b41' },
     { src = gh'DingDean/wgsl.vim',           version = 'bb6516e0356e81cc10a885e63273ef1d63cc74b1' },
     { src = gh'0x96f-org/0x96f.nvim',        version = '188c2be71a4e046df7cea095ccd61a520ee21249' },
+    { src = gh'catppuccin/nvim' },
+    { src = gh'rebelot/kanagawa.nvim' },
+    { src = gh'lunacookies/vim-colors-xcode' },
+    { src = gh'folke/tokyonight.nvim' },
+    { src = gh'mofiqul/dracula.nvim' },
+    { src = gh'rose-pine/neovim' },
+    { src = gh'rafi/awesome-vim-colorschemes' },
+    { src = gh'loctvl842/monokai-pro.nvim' },
 })
+
 require_safe 'config.dirtree'
 require_safe 'config.ufind'
 require_safe 'config.mini'
+
+vim.cmd'colo onehalfdark'
+
+local function hl(name, val)
+    vim.api.nvim_set_hl(0, name, val)
+end
+hl('Type', {link = 'String'})
 
 -- Neovim ---------------------------------------------------------------------
 stub_com('Undotree', 'nvim.undotree')

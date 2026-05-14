@@ -1,9 +1,5 @@
 local dirtree = require'dirtree'
 
-local function setup_highlights()
-    vim.api.nvim_set_hl(0, 'DirtreeDirectory', {link = 'MoreMsg', update = true})
-end
-
 dirtree.config = vim.tbl_deep_extend('force', dirtree.config, {
     keymaps = {
         r = "<Cmd>lua require'dirtree.core'.move()<CR>",
@@ -13,7 +9,11 @@ dirtree.config = vim.tbl_deep_extend('force', dirtree.config, {
     },
 })
 
-setup_highlights()
-aug'my/udir'('ColorScheme', '*', setup_highlights)
+-- local function setup_highlights()
+--     vim.api.nvim_set_hl(0, 'DirtreeDirectory', {link = 'MoreMsg', update = true})
+-- end
+--
+-- setup_highlights()
+-- aug'my/udir'('ColorScheme', '*', setup_highlights)
 
 map('n', '-', '<Cmd>Dirtree<CR>')

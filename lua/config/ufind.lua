@@ -1,6 +1,56 @@
 local ufind = require'ufind'
 local util = require'util'
 local uv = vim.uv
+local Uf = require'ufind.Uf'
+
+local function install_selection_hook()
+    if Uf._config_selection_hook_installed then
+        return
+    end
+    Uf._config_selection_hook_installed = true
+
+    local new = Uf.new
+    Uf.new = function(...)
+        local uf = new(...)
+        uf._config_on_select = Uf._config_next_on_select
+        Uf._config_next_on_select = nil
+        return uf
+    end
+
+    local function on_select(uf)
+        if not uf._config_on_select then
+            return
+        end
+        local ok, err = xpcall(uf._config_on_select, debug.traceback, uf)
+        if not ok then
+            uf._config_on_select = nil
+            vim.notify(err, vim.log.levels.ERROR)
+        end
+    end
+
+    local move_cursor_and_redraw = Uf.move_cursor_and_redraw
+    Uf.move_cursor_and_redraw = function(self, ...)
+        move_cursor_and_redraw(self, ...)
+        on_select(self)
+    end
+
+    local redraw_results = Uf.redraw_results
+    Uf.redraw_results = function(self, ...)
+        redraw_results(self, ...)
+        on_select(self)
+    end
+end
+
+install_selection_hook()
+
+local function with_selection_hook(on_select, open)
+    Uf._config_next_on_select = on_select
+    local ok, err = xpcall(open, debug.traceback)
+    if not ok then
+        Uf._config_next_on_select = nil
+        error(err, 0)
+    end
+end
 
 local function cfg(t)
     return vim.tbl_deep_extend('keep', t, {
@@ -170,6 +220,78 @@ local function notes()
     ufind.open(split_basename(paths), basename_cfg{})
 end
 
+local function colorscheme_source()
+    local schemes = vim.fn.getcompletion('', 'color')
+    table.sort(schemes)
+
+    local seen = {}
+    local result = {}
+    local function add(scheme)
+        if scheme and scheme ~= '' and not seen[scheme] then
+            seen[scheme] = true
+            result[#result+1] = scheme
+        end
+    end
+
+    add(vim.g.colors_name)
+    for _, scheme in ipairs(schemes) do
+        add(scheme)
+    end
+    return result
+end
+
+local failed_colorschemes = {}
+
+local function apply_colorscheme(scheme, uf)
+    if not scheme or scheme == '' or scheme == vim.g.colors_name then
+        return
+    end
+
+    local ok, err = pcall(vim.cmd.colorscheme, scheme)
+    if not ok then
+        if not failed_colorschemes[scheme] then
+            failed_colorschemes[scheme] = true
+            vim.notify(err, vim.log.levels.WARN)
+        end
+        return
+    end
+
+    failed_colorschemes[scheme] = nil
+    if uf then
+        require'ufind.highlight'.setup(uf.ansi)
+    end
+end
+
+local function preview_colorscheme(uf)
+    if not vim.api.nvim_buf_is_valid(uf.result_buf) then
+        return
+    end
+
+    local cursor = uf:get_cursor()
+    local scheme = vim.api.nvim_buf_get_lines(
+        uf.result_buf, cursor - 1, cursor, false)[1]
+    if scheme == uf._config_last_colorscheme then
+        return
+    end
+
+    uf._config_last_colorscheme = scheme
+    apply_colorscheme(scheme, uf)
+end
+
+local function colorschemes()
+    with_selection_hook(preview_colorscheme, function()
+        ufind.open(colorscheme_source(), cfg{
+            layout = {
+                height = 0.45,
+                width = 0.35,
+            },
+            on_complete = function(_, results)
+                apply_colorscheme(results[#results])
+            end,
+        })
+    end)
+end
+
 local function interactive_find()
     local function ls(path)
         local paths = {[1] = path .. '/..'}
@@ -234,6 +356,7 @@ map('n', '<space>o', oldfiles)
 map('n', '<space>f', find)
 map('n', '<space>F', interactive_find)
 map('n', '<space>n', notes)
+map('n', '<space>c', colorschemes)
 -- map('n', '<space>x', live_grep)
 map('n', '<space>h', help_grep)
 

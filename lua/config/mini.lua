@@ -67,7 +67,6 @@ require('mini.diff').setup({
   },
 })
 map('n', 'god', function() require'mini.diff'.toggle_overlay() vim.api.nvim_feedkeys('zz', 'n', true) end)
-map('n', 'gon', function() require'mini.diff'.toggle_overlay() vim.api.nvim_feedkeys('zz', 'n', true) end)
 
 local function open_git_diff_hunks()
     local diff = require'mini.diff'

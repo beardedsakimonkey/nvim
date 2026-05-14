@@ -17,10 +17,12 @@ vim.g.loaded_python3_provider = 1
 vim.g.loaded_ruby_provider = 1
 
 function _G.require_safe(mod)
-    local ok, msg = xpcall(function() return require(mod) end, debug.traceback)
+    local ok, result = xpcall(function() return require(mod) end, debug.traceback)
     if not ok then
-        vim.api.nvim_echo(('Error requiring %s: %s'):format(mod, msg), true, {err=true})
+        vim.api.nvim_echo(('Error requiring %s: %s'):format(mod, result), true, {err=true})
+        return nil
     end
+    return result
 end
 
 require_safe 'globals'
@@ -34,9 +36,12 @@ require_safe 'lsp'
 require_safe 'features.pack'
 require_safe 'features.terminal'
 require_safe 'features.hlsearch'
+local ghostty_theme = require_safe'features.ghostty_theme'
+if ghostty_theme ~= nil then
+    ghostty_theme.setup()
+end
 
 -- After setting up globals so they're available to ftplugin / colorscheme files
-vim.cmd 'colorscheme 0x96f'
 vim.cmd 'syntax enable'  -- see :h syntax-loading
 
 require'vim._core.ui2'.enable({enable = true})

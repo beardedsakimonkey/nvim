@@ -43,15 +43,15 @@ local function git_status()
 
     local parts = {}
 
-    -- Git branch
-    if summary.head_name ~= nil then
-        table.insert(parts, component('StatusLineGitBranch', '  ' .. summary.head_name))
-    end
-
     -- Git status
     local diff = git_diff_summary(bufnr)
     if diff ~= '' then
         table.insert(parts, ' ' .. diff)
+    end
+
+    -- Git branch
+    if summary.head_name ~= nil then
+        table.insert(parts, component('StatusLineGitBranch', '  ' .. summary.head_name))
     end
 
     return table.concat(parts, ' ') .. ' '
@@ -60,7 +60,7 @@ end
 local function session_status()
     local status = vim.fn['session#status']()
     if status == '' then return '' end
-    return component('StatusLineSession', status) .. ' '
+    return component('StatusLineSession', status)
 end
 
 local diagnostic_levels = {
@@ -87,8 +87,8 @@ vim.diagnostic.config({
 M.statusline = function()
     local current_win = vim.g.statusline_winid == vim.fn.win_getid()
     return default_statusline
-        .. (current_win and session_status() or '')
         .. (current_win and git_status() or '')
+        -- .. (current_win and session_status() or '')
 end
 
 vim.opt.statusline = "%!v:lua.require'statusline'.statusline()"

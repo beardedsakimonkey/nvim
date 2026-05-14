@@ -248,6 +248,7 @@ map('n', ']d', function() move_line'down' end)
 -- Bookmarks
 map('n', ':V', '<Cmd>e $VIMRUNTIME<CR>', {silent = true})
 map('n', ':C', '<Cmd>e ~/.config/nvim/lua/<CR>', {silent = true})
+map('n', ':L', '<Cmd>e ~/.config/nvim/lua/<CR>', {silent = true})
 map('n', ':P', '<Cmd>e ~/.local/share/nvim/site/pack/core/opt/<CR>', {silent = true})
 map('n', ':Z', '<Cmd>e ~/.zshrc<CR>', {silent = true})
 map('n', ':N', '<Cmd>e ~/notes<CR>', {silent = true})

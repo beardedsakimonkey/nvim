@@ -48,7 +48,7 @@ vim.opt.foldopen:remove('block')
 
 vim.opt.modeline = false
 vim.opt.shortmess = 'filnxtToOfaTWIcFS'
-vim.opt.fillchars = {eob = ' '}
+vim.opt.fillchars = {eob = ' '}--,  vert = "░" }
 vim.opt.list = true
 vim.opt.colorcolumn = '+0'
 

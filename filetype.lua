@@ -13,6 +13,7 @@ vim.filetype.add{
         ['.luacheckrc'] = 'lua',
     },
     pattern = {
+        ['${HOME}/.config/ghostty/config.*'] = 'ghostty',
         ['/zsh/functions/[^/]-$'] = 'zsh',
         ['res?i?$'] = 'ocaml',
     },
