@@ -270,6 +270,7 @@ map('n', 'yO', function() yank_doc('%:p') end, {silent = true})
 
 -- Toggle options
 map('n', 'gon', '<Cmd>set number!<CR>', {silent = true})
+map('n', 'gob', '<Cmd>let &bg=&bg=="dark"?"light":"dark"<CR>', {silent = true})
 map('n', 'goc', '<Cmd>set cursorline!<CR>', {silent = true})
 map('n', 'gol', '<Cmd>set list!<CR>', {silent = true})
 map('n', 'gow', '<Cmd>set wrap!<Bar>set wrap?<CR>')

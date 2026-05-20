@@ -221,9 +221,9 @@ fu session#status() abort
     if v:this_session is# '' && !exists('g:my_session')
         return ''
     elseif v:this_session isnot# '' && exists('g:my_session')
-        return '['.fnamemodify(g:my_session, ':t:r').']'
+        return '⏺'.fnamemodify(g:my_session, ':t:r')
     else
-        return '[]'
+        return ''
     endif
 endfu
 

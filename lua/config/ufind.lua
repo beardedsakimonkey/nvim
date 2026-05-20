@@ -13,7 +13,9 @@ local function install_selection_hook()
     Uf.new = function(...)
         local uf = new(...)
         uf._config_on_select = Uf._config_next_on_select
+        uf._config_on_scroll = Uf._config_next_on_scroll
         Uf._config_next_on_select = nil
+        Uf._config_next_on_scroll = nil
         return uf
     end
 
@@ -39,15 +41,30 @@ local function install_selection_hook()
         redraw_results(self, ...)
         on_select(self)
     end
+
+    local scroll_horizontally = Uf.scroll_horizontally
+    Uf.scroll_horizontally = function(self, ...)
+        if self._config_on_scroll then
+            local ok, err = xpcall(self._config_on_scroll, debug.traceback, self, ...)
+            if not ok then
+                self._config_on_scroll = nil
+                vim.notify(err, vim.log.levels.ERROR)
+            end
+            return
+        end
+        scroll_horizontally(self, ...)
+    end
 end
 
 install_selection_hook()
 
-local function with_selection_hook(on_select, open)
-    Uf._config_next_on_select = on_select
+local function with_picker_hooks(hooks, open)
+    Uf._config_next_on_select = hooks.on_select
+    Uf._config_next_on_scroll = hooks.on_scroll
     local ok, err = xpcall(open, debug.traceback)
     if not ok then
         Uf._config_next_on_select = nil
+        Uf._config_next_on_scroll = nil
         error(err, 0)
     end
 end
@@ -278,9 +295,26 @@ local function preview_colorscheme(uf)
     apply_colorscheme(scheme, uf)
 end
 
+local function set_colorscheme_background(uf, scroll)
+    local bg = scroll == 'scroll_left' and 'light' or 'dark'
+    if vim.o.background == bg then
+        return
+    end
+
+    vim.o.background = bg
+    require'ufind.highlight'.setup(uf.ansi)
+end
+
 local function colorschemes()
-    with_selection_hook(preview_colorscheme, function()
+    with_picker_hooks({
+        on_select = preview_colorscheme,
+        on_scroll = set_colorscheme_background,
+    }, function()
         ufind.open(colorscheme_source(), cfg{
+            keymaps = {
+                scroll_left = '<Left>',
+                scroll_right = '<Right>',
+            },
             layout = {
                 height = 0.45,
                 width = 0.35,

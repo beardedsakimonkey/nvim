@@ -5,11 +5,8 @@ local last_theme
 
 local schemes = {
     ['one half dark'] = 'onehalfdark',
-    ['catppuccin macchiato'] = 'catppuccin-macchiato',
-    ['monokai pro octagon'] = 'monokai-pro-octagon',
-    ['rose pine moon'] = 'rose-pine-moon',
-    ['tokyonight storm'] = 'tokyonight-storm',
-    ['xcode dark'] = 'xcodedark',
+    ['monokai classic'] = 'unokai',
+    ['kanagawa wave'] = 'kanagawa-wave',
 }
 
 local function read(path)
@@ -64,15 +61,7 @@ function M.apply()
     vim.cmd.colorscheme(scheme)
 end
 
-function M.setup()
-    M.apply()
-
-    local au = aug'my/ghostty-theme'
-    au({'FocusGained', 'BufEnter'}, '*', M.apply)
-    au('BufWritePost', {
-        '*/.config/ghostty/config',
-        '*/.config/ghostty/config-*',
-    }, M.apply)
-end
+local au = aug'my/ghostty-theme'
+au('BufWritePost', {'*/.config/ghostty/config'}, M.apply)
 
 return M

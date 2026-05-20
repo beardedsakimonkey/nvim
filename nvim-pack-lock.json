@@ -1,21 +1,14 @@
 {
   "plugins": {
-    "0x96f.nvim": {
-      "rev": "188c2be71a4e046df7cea095ccd61a520ee21249",
-      "src": "https://github.com/0x96f-org/0x96f.nvim",
-      "version": "'188c2be71a4e046df7cea095ccd61a520ee21249'"
-    },
-    "awesome-vim-colorschemes": {
-      "rev": "ae5e02298c8de6a5aa98fe4d29a21874cfcc3619",
-      "src": "https://github.com/rafi/awesome-vim-colorschemes"
-    },
-    "dracula.nvim": {
-      "rev": "ae752c13e95fb7c5f58da4b5123cb804ea7568ee",
-      "src": "https://github.com/mofiqul/dracula.nvim"
+    "bamboo.nvim": {
+      "rev": "1309bc88bffcf1bedc3e84e7fa9004de93da774a",
+      "src": "https://github.com/ribru17/bamboo.nvim",
+      "version": "'1309bc88bffcf1bedc3e84e7fa9004de93da774a'"
     },
     "kanagawa.nvim": {
       "rev": "bb85e4bfc8d89b0e62c8fa53ccdd13d12e2f77b3",
-      "src": "https://github.com/rebelot/kanagawa.nvim"
+      "src": "https://github.com/rebelot/kanagawa.nvim",
+      "version": "'bb85e4bfc8d89b0e62c8fa53ccdd13d12e2f77b3'"
     },
     "linediff.vim": {
       "rev": "245d16328c47a132574e0fa4298d24a0f78b20b0",
@@ -48,20 +41,9 @@
       "version": "'stable'"
     },
     "monokai-pro.nvim": {
-      "rev": "2eb6fe008dcabb5c2d37978fe34f36bb318a2a96",
-      "src": "https://github.com/loctvl842/monokai-pro.nvim"
-    },
-    "neovim": {
-      "rev": "6a961effd67f6130d36df6d1c05c48c739796dd2",
-      "src": "https://github.com/rose-pine/neovim"
-    },
-    "nord.nvim": {
-      "rev": "80c1e5321505aeb22b7a9f23eb82f1e193c12470",
-      "src": "https://github.com/shaunsingh/nord.nvim"
-    },
-    "nvim": {
-      "rev": "426dbebe06b5c69fd846ceb17b42e12f890aedf1",
-      "src": "https://github.com/catppuccin/nvim"
+      "rev": "a68e38b8e55d69a215d0f02598900a79c356da9d",
+      "src": "https://github.com/loctvl842/monokai-pro.nvim",
+      "version": "'a68e38b8e55d69a215d0f02598900a79c356da9d'"
     },
     "nvim-dirtree": {
       "rev": "8f307b0a765b13175a7eefc70c3d437ec773c402",
@@ -76,13 +58,10 @@
       "rev": "ad2a5b91ff52a4015d5fcb667c754bb7aca9bf1a",
       "src": "https://github.com/beardedsakimonkey/nvim-ufind"
     },
-    "tokyonight.nvim": {
-      "rev": "cdc07ac78467a233fd62c493de29a17e0cf2b2b6",
-      "src": "https://github.com/folke/tokyonight.nvim"
-    },
-    "vim-colors-xcode": {
-      "rev": "2329a3ed092b4f72e9361a94567a5431e36e7d9c",
-      "src": "https://github.com/lunacookies/vim-colors-xcode"
+    "onehalf": {
+      "rev": "75eb2e97acd74660779fed8380989ee7891eec56",
+      "src": "https://github.com/sonph/onehalf",
+      "version": "'75eb2e97acd74660779fed8380989ee7891eec56'"
     },
     "vim-jsx-pretty": {
       "rev": "6989f1663cc03d7da72b5ef1c03f87e6ddb70b41",

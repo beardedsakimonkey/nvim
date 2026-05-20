@@ -49,9 +49,9 @@ require('mini.operators').make_mappings(
 )
 
 -- mini.diff ------------------------------------------------------------------
-
 --[[
-    - `vip` followed by `gh` / `gH` applies/resets hunks inside current paragraph. Same can be achieved in operator form `ghip` / `gHip`, which has the advantage of being dot-repeatable.
+    - Visual mode `gh` / `gH` applies/resets hunks inside current paragraph.
+      Same can be achieved in operator form `ghip` / `gHip`, which has the advantage of being dot-repeatable.
     - `ghgh` / `gHgh` applies/resets hunk under cursor.
     - `dgh` deletes hunk under cursor.
 --]]
@@ -66,79 +66,92 @@ require('mini.diff').setup({
     goto_last = ']H',
   },
 })
-map('n', 'god', function() require'mini.diff'.toggle_overlay() vim.api.nvim_feedkeys('zz', 'n', true) end)
+map('n', 'god', function()
+    require'mini.diff'.toggle_overlay(0)
+    vim.api.nvim_feedkeys('zz', 'n', true)
+end)
 
-local function open_git_diff_hunks()
-    local diff = require'mini.diff'
-    local root = vim.fn.systemlist({'git', 'rev-parse', '--show-toplevel'})[1]
-    if vim.v.shell_error ~= 0 or root == nil or root == '' then
-        vim.notify('Not in a git repository', vim.log.levels.WARN)
+local function open_current_file_diff()
+    local buf = vim.api.nvim_get_current_buf()
+    local path = vim.api.nvim_buf_get_name(buf)
+    if path == '' then
+        vim.notify('No current file to diff', vim.log.levels.WARN)
         return
     end
 
-    local files = vim.fn.systemlist({'git', '-C', root, 'diff', '--name-only'})
-    if vim.v.shell_error ~= 0 then
-        vim.notify('git diff failed', vim.log.levels.ERROR)
+    local mini_diff = require'mini.diff'
+    local data = mini_diff.get_buf_data(buf)
+    if data == nil then
+        mini_diff.enable(buf)
+        data = mini_diff.get_buf_data(buf)
+    end
+    if data == nil or data.ref_text == nil then
+        vim.notify('No diff source for current file', vim.log.levels.WARN)
         return
     end
-    if #files == 0 then
-        vim.notify('No changed files', vim.log.levels.INFO)
-        return
+
+    local ref_buf = vim.api.nvim_create_buf(false, true)
+    local lines = vim.split(data.ref_text, '\n', {plain = true})
+    if lines[#lines] == '' then table.remove(lines) end
+    vim.api.nvim_buf_set_lines(ref_buf, 0, -1, false, lines)
+    vim.bo[ref_buf].buftype = 'nofile'
+    vim.bo[ref_buf].bufhidden = 'wipe'
+    vim.bo[ref_buf].swapfile = false
+    vim.bo[ref_buf].filetype = vim.bo[buf].filetype
+    vim.bo[ref_buf].modifiable = false
+
+    local file_name = vim.fn.fnamemodify(path, ':t')
+    vim.api.nvim_buf_set_name(ref_buf, 'minidiff://' .. buf .. '/' .. file_name .. '/index/' .. vim.uv.hrtime())
+
+    local win = vim.api.nvim_get_current_win()
+    vim.cmd('leftabove vertical split')
+    local ref_win = vim.api.nvim_get_current_win()
+    vim.api.nvim_win_set_buf(ref_win, ref_buf)
+    vim.api.nvim_win_set_buf(win, buf)
+
+    vim.api.nvim_win_call(ref_win, vim.cmd.diffthis)
+    vim.api.nvim_win_call(win, vim.cmd.diffthis)
+    vim.api.nvim_set_current_win(win)
+
+    local group = vim.api.nvim_create_augroup('my/mini/diff-view/' .. ref_buf, {clear = true})
+    local cleaning = false
+    local function cleanup()
+        if cleaning then return end
+        cleaning = true
+        pcall(vim.api.nvim_del_augroup_by_id, group)
+
+        for _, diff_win in ipairs({ ref_win, win }) do
+            if vim.api.nvim_win_is_valid(diff_win) then
+                vim.api.nvim_win_call(diff_win, function()
+                    vim.cmd('diffoff')
+                    vim.cmd('close')
+                end)
+            end
+        end
     end
 
-    local bufs = {}
-    for _, file in ipairs(files) do
-        local path = root .. '/' .. file
-        local buf = vim.fn.bufnr(path, true)
-        vim.bo[buf].buflisted = true
-        vim.fn.bufload(buf)
-        diff.enable(buf)
-        table.insert(bufs, buf)
+    for _, diff_win in ipairs({ ref_win, win }) do
+        vim.api.nvim_create_autocmd('WinClosed', {
+            group = group,
+            pattern = tostring(diff_win),
+            callback = cleanup,
+        })
     end
-
-    local function export_hunks(attempt)
-        local pending = vim.tbl_filter(function(buf)
-            local data = diff.get_buf_data(buf)
-            return data ~= nil and data.ref_text == nil
-        end, bufs)
-
-        if #pending > 0 and attempt < 20 then
-            vim.defer_fn(function() export_hunks(attempt + 1) end, 50)
-            return
-        end
-
-        local wanted = {}
-        for _, buf in ipairs(bufs) do
-            wanted[buf] = true
-        end
-        local items = vim.tbl_filter(function(item)
-            return wanted[item.bufnr]
-        end, diff.export('qf', { scope = 'all' }))
-        vim.fn.setqflist({}, ' ', { title = 'Git diff hunks', items = items })
-        if #items == 0 then
-            vim.notify('No hunks found', vim.log.levels.INFO)
-        else
-            vim.cmd('copen')
-        end
-    end
-
-    export_hunks(0)
 end
 
-map('n', '<space>gq', open_git_diff_hunks)
+map('n', '<space>gd', open_current_file_diff)
+
 
 -- mini.git -------------------------------------------------------------------
 require('mini.git').setup()
 
 map({'n', 'x'}, '<space>gs', '<Cmd>lua MiniGit.show_at_cursor()<CR>')
 map({'n', 'x'}, '<space>gh', '<Cmd>lua MiniGit.show_range_history()<CR>')
--- map({'n', 'x'}, '<space>gd', '<Cmd>lua MiniGit.show_diff_source()<CR>')
 
 map('n', '<space>gc', '<Cmd>silent vert Git commit -a<CR>')
 map('n', '<space>gC', '<Cmd>silent vert Git commit --amend --reuse-message=HEAD<CR>')
 map('n', '<space>gb', '<Cmd>leftabove vert Git blame %<CR>')
 map('n', '<space>gl', '<Cmd>vert Git log<CR>')
-map('n', '<space>gd', '<Cmd>Git diff<CR>')
 
 au('User', 'MiniGitCommandSplit', function(au_data)
     if au_data.data.git_subcommand ~= 'blame' then return end

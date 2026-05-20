@@ -33,6 +33,7 @@ vim.opt.infercase = true
 vim.opt.smartcase = true
 
 vim.opt.completeopt = {'menu', 'menuone', 'noselect', 'popup'}
+vim.opt.autocomplete = true
 vim.opt.complete = {'.', 'i'}
 vim.opt.wildmenu = true
 vim.opt.wildignorecase = true
@@ -65,4 +66,5 @@ vim.opt.jumpoptions = 'view'
 
 vim.opt.diffopt:append('linematch:60')  -- better diff
 
-vim.opt.winborder = '▛,▀,▜,▐,▟,▄,▙,▌'
+-- vim.opt.winborder = '▛,▀,▜,▐,▟,▄,▙,▌'
+-- vim.opt.winborder = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" }

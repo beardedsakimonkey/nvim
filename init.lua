@@ -33,13 +33,6 @@ require_safe 'statusline'
 require_safe 'mappings'
 require_safe 'plugins'
 require_safe 'lsp'
-require_safe 'features.pack'
-require_safe 'features.terminal'
-require_safe 'features.hlsearch'
-local ghostty_theme = require_safe'features.ghostty_theme'
-if ghostty_theme ~= nil then
-    ghostty_theme.setup()
-end
 
 -- After setting up globals so they're available to ftplugin / colorscheme files
 vim.cmd 'syntax enable'  -- see :h syntax-loading

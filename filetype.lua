@@ -14,6 +14,7 @@ vim.filetype.add{
     },
     pattern = {
         ['${HOME}/.config/ghostty/config.*'] = 'ghostty',
+        ['${HOME}/.config/ghostty/*.conf'] = 'ghostty',
         ['/zsh/functions/[^/]-$'] = 'zsh',
         ['res?i?$'] = 'ocaml',
     },

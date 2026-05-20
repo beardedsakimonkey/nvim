@@ -15,27 +15,24 @@ vim.pack.add({
     { src = gh'AndrewRadev/linediff.vim',    version = '245d16328c47a132574e0fa4298d24a0f78b20b0' },
     { src = gh'MaxMEllon/vim-jsx-pretty',    version = '6989f1663cc03d7da72b5ef1c03f87e6ddb70b41' },
     { src = gh'DingDean/wgsl.vim',           version = 'bb6516e0356e81cc10a885e63273ef1d63cc74b1' },
-    { src = gh'0x96f-org/0x96f.nvim',        version = '188c2be71a4e046df7cea095ccd61a520ee21249' },
-    { src = gh'catppuccin/nvim' },
-    { src = gh'rebelot/kanagawa.nvim' },
-    { src = gh'lunacookies/vim-colors-xcode' },
-    { src = gh'folke/tokyonight.nvim' },
-    { src = gh'mofiqul/dracula.nvim' },
-    { src = gh'rose-pine/neovim' },
-    { src = gh'rafi/awesome-vim-colorschemes' },
-    { src = gh'loctvl842/monokai-pro.nvim' },
-})
+    { src = gh'rebelot/kanagawa.nvim',       version = 'bb85e4bfc8d89b0e62c8fa53ccdd13d12e2f77b3' },
+    { src = gh'loctvl842/monokai-pro.nvim',  version = 'a68e38b8e55d69a215d0f02598900a79c356da9d' },
+    { src = gh'sonph/onehalf',               version = '75eb2e97acd74660779fed8380989ee7891eec56' },
+}, { confirm = false })
+
+local onehalf = vim.pack.get({ 'onehalf' }, { info = false })[1]
+if onehalf then
+    vim.opt.runtimepath:prepend(onehalf.path .. '/vim')
+end
 
 require_safe 'config.dirtree'
 require_safe 'config.ufind'
 require_safe 'config.mini'
-
-vim.cmd'colo onehalfdark'
-
-local function hl(name, val)
-    vim.api.nvim_set_hl(0, name, val)
-end
-hl('Type', {link = 'String'})
+require_safe 'features.pack'
+require_safe 'features.terminal'
+require_safe 'features.hlsearch'
+local theme = require_safe 'features.ghostty_theme'
+if theme ~= nil then theme.apply() end
 
 -- Neovim ---------------------------------------------------------------------
 stub_com('Undotree', 'nvim.undotree')

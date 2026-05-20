@@ -18,15 +18,9 @@ local git_diff_summary = function(bufnr)
     if type(summary) ~= 'table' or summary.n_ranges == nil then return '' end
 
     local parts = {}
-    if summary.add > 0 then
-        table.insert(parts, component('StatusLineGitAdd', '+' .. summary.add))
-    end
-    if summary.change > 0 then
-        table.insert(parts, component('StatusLineGitChange', '~' .. summary.change))
-    end
-    if summary.delete > 0 then
-        table.insert(parts, component('StatusLineGitDelete', '-' .. summary.delete))
-    end
+    if summary.add > 0    then table.insert(parts, component('StatusLineGitAdd',    '+' .. summary.add)) end
+    if summary.change > 0 then table.insert(parts, component('StatusLineGitChange', '~' .. summary.change)) end
+    if summary.delete > 0 then table.insert(parts, component('StatusLineGitDelete', '-' .. summary.delete)) end
 
     return table.concat(parts, ' ')
 end
@@ -60,7 +54,9 @@ end
 local function session_status()
     local status = vim.fn['session#status']()
     if status == '' then return '' end
-    return component('StatusLineSession', status)
+    -- only show the first character
+    local char = vim.fn.strcharpart(status, 0, 1, true)
+    return component('StatusLineSession', char)
 end
 
 local diagnostic_levels = {
@@ -88,7 +84,7 @@ M.statusline = function()
     local current_win = vim.g.statusline_winid == vim.fn.win_getid()
     return default_statusline
         .. (current_win and git_status() or '')
-        -- .. (current_win and session_status() or '')
+        .. (current_win and session_status() or '')
 end
 
 vim.opt.statusline = "%!v:lua.require'statusline'.statusline()"
