@@ -33,8 +33,11 @@ require_safe 'features.pack'
 require_safe 'features.terminal'
 require_safe 'features.hlsearch'
 local theme = require_safe 'features.ghostty_theme'
-if theme ~= nil then theme.apply() end
-vim.cmd 'colo onehalfdark'
+if theme ~= nil then
+    theme.apply()
+else
+    vim.cmd 'colo onehalfdark'
+end
 
 -- Neovim ---------------------------------------------------------------------
 stub_com('Undotree', 'nvim.undotree')
