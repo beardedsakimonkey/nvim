@@ -36,3 +36,8 @@ end
 com('PackUpdate', function() vim.pack.update(nil, { force = true }) end)
 com('PackList',   function() vim.pack.update(nil, { offline = true }) end)
 com('PackClean',  prompt_delete_inactive_plugins)
+
+map('n', '<space>pu', '<Cmd>PackUpdate<CR>')
+map('n', '<space>pi', '<Cmd>PackUpdate<CR>')
+map('n', '<space>pl', '<Cmd>PackList<CR>')
+map('n', '<space>pc', '<Cmd>PackClean<CR>')

@@ -18,6 +18,7 @@ vim.pack.add({
     { src = gh'rebelot/kanagawa.nvim',       version = 'bb85e4bfc8d89b0e62c8fa53ccdd13d12e2f77b3' },
     { src = gh'loctvl842/monokai-pro.nvim',  version = 'a68e38b8e55d69a215d0f02598900a79c356da9d' },
     { src = gh'sonph/onehalf',               version = '75eb2e97acd74660779fed8380989ee7891eec56' },
+    { src = gh'kaarmu/typst.vim',            version = '1d5436c0f55490893892441c0eca55e6cdf4916c' },
 }, { confirm = false })
 
 local onehalf = vim.pack.get({ 'onehalf' }, { info = false })[1]
@@ -33,6 +34,7 @@ require_safe 'features.terminal'
 require_safe 'features.hlsearch'
 local theme = require_safe 'features.ghostty_theme'
 if theme ~= nil then theme.apply() end
+vim.cmd 'colo onehalfdark'
 
 -- Neovim ---------------------------------------------------------------------
 stub_com('Undotree', 'nvim.undotree')

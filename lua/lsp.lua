@@ -59,6 +59,7 @@ local definition_handler = function(...)
     vim.cmd 'norm! zz'
 end
 
+-- Typescript
 vim.lsp.config('tsserver', {
     cmd = { 'typescript-language-server', '--stdio' },
     filetypes = {'typescript', 'typescriptreact'},
@@ -67,6 +68,26 @@ vim.lsp.config('tsserver', {
 })
 vim.lsp.enable('tsserver')
 
+-- Typst
+vim.lsp.config('tinymist', {
+    cmd = {'tinymist'},
+    filetypes = {'typst'},
+    root_dir = function(bufnr, on_dir)
+        local root = vim.fs.root(bufnr, {'typst.toml', '.git'})
+        local name = vim.api.nvim_buf_get_name(bufnr)
+
+        if root == nil and name ~= '' then
+            root = vim.fs.dirname(name)
+        end
+
+        if root ~= nil then
+            on_dir(root)
+        end
+    end,
+})
+vim.lsp.enable('tinymist')
+
+-- Lua
 vim.lsp.config('lua_ls', {
     cmd = { 'lua-language-server' },
     filetypes = { 'lua' },

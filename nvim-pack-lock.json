@@ -1,10 +1,5 @@
 {
   "plugins": {
-    "bamboo.nvim": {
-      "rev": "1309bc88bffcf1bedc3e84e7fa9004de93da774a",
-      "src": "https://github.com/ribru17/bamboo.nvim",
-      "version": "'1309bc88bffcf1bedc3e84e7fa9004de93da774a'"
-    },
     "kanagawa.nvim": {
       "rev": "bb85e4bfc8d89b0e62c8fa53ccdd13d12e2f77b3",
       "src": "https://github.com/rebelot/kanagawa.nvim",
@@ -62,6 +57,11 @@
       "rev": "75eb2e97acd74660779fed8380989ee7891eec56",
       "src": "https://github.com/sonph/onehalf",
       "version": "'75eb2e97acd74660779fed8380989ee7891eec56'"
+    },
+    "typst.vim": {
+      "rev": "1d5436c0f55490893892441c0eca55e6cdf4916c",
+      "src": "https://github.com/kaarmu/typst.vim",
+      "version": "'1d5436c0f55490893892441c0eca55e6cdf4916c'"
     },
     "vim-jsx-pretty": {
       "rev": "6989f1663cc03d7da72b5ef1c03f87e6ddb70b41",
