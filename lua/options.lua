@@ -4,7 +4,7 @@ vim.opt.sessionoptions = {'help', 'tabpages', 'winsize', 'curdir'}
 vim.opt.mousemodel = 'extend'
 
 vim.opt.ttimeoutlen = 0  -- avoid confusing <esc>-key with <a-…>
-vim.opt.timeoutlen = 3000
+vim.opt.timeoutlen = 5000
 vim.opt.synmaxcol = 500
 
 vim.opt.confirm = true

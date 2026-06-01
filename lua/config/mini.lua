@@ -170,3 +170,7 @@ au('User', 'MiniGitCommandSplit', function(au_data)
     -- Bind both windows so that they scroll together
     vim.wo[win_src].scrollbind, vim.wo.scrollbind = true, true
 end)
+
+-- mini.files -----------------------------------------------------------------
+-- require'mini.files'.setup({})
+-- map('n', '-', '<Cmd>lua MiniFiles.open()<CR>')

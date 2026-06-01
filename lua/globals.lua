@@ -59,13 +59,3 @@ _G.stub_map = function(mode, lhs, pack)
         vim.api.nvim_input(lhs)
     end)
 end
-
--- Convert snake_case to PascalCase
--- Ex: `:s/\w\+/\=v:lua.cc(submatch(0))/g`
-_G.cc = function(str)
-    return str:gsub('_(.)', function(match)
-        return match:upper()
-    end):gsub('^%l', function(match)
-        return match:upper()
-    end)
-end

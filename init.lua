@@ -16,23 +16,19 @@ vim.g.loaded_python_provider = 1
 vim.g.loaded_python3_provider = 1
 vim.g.loaded_ruby_provider = 1
 
-function _G.require_safe(mod)
-    local ok, result = xpcall(function() return require(mod) end, debug.traceback)
-    if not ok then
-        vim.api.nvim_echo(('Error requiring %s: %s'):format(mod, result), true, {err=true})
-        return nil
-    end
-    return result
-end
-
-require_safe 'globals'
-require_safe 'commands'
-require_safe 'autocmds'
-require_safe 'options'
-require_safe 'statusline'
-require_safe 'mappings'
-require_safe 'plugins'
-require_safe 'lsp'
+require 'globals'
+require 'commands'
+require 'autocmds'
+require 'options'
+require 'statusline'
+require 'mappings'
+require 'plugins'
+require 'lsp'
+require 'features.pack'
+require 'features.terminal'
+require 'features.hlsearch'
+require 'features.autocomplete'
+require 'features.ghostty_theme'.apply()
 
 -- After setting up globals so they're available to ftplugin / colorscheme files
 vim.cmd 'syntax enable'  -- see :h syntax-loading

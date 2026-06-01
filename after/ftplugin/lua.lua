@@ -17,7 +17,8 @@ end
 
 vim.opt_local.keywordprg = ':help'
 vim.opt_local.textwidth = 80
+vim.opt_local.omnifunc = 'v:lua.vim.lua_omnifunc'
 map('n', 'gd', goto_require, {buffer = true})
 
 vim.b.undo_ftplugin = (vim.b.undo_ftplugin or 'exe')
-    ..  ' | setl keywordprg< | setl textwidth< | sil! nun <buffer> gd'
+    ..  ' | setl keywordprg< | setl textwidth< | setl omnifunc< | sil! nun <buffer> gd'

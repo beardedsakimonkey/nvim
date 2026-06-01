@@ -62,9 +62,9 @@ local function lsp_status(bufnr)
     if not vim.b[bufnr].statusline_lsp_active then return '' end
     local severity = vim.b[bufnr].statusline_lsp_severity
     if severity and severity <= vim.diagnostic.severity.WARN then
-        return component('DiagnosticError', '✘')
+        return component('DiagnosticError', '✘') .. ' '
     end
-    return component('DiagnosticOk', '✔')
+    return component('DiagnosticOk', '✔') .. ' '
 end
 
 local function git_diff_summary(bufnr)
@@ -107,8 +107,8 @@ local function session_status()
     local status = vim.fn['session#status']()
     if status == '' then return '' end
     -- only show the first character
-    local char = vim.fn.strcharpart(status, 0, 1, true)
-    return component('StatusLineSession', char) .. ' '
+    -- local char = vim.fn.strcharpart(status, 0, 1, true)
+    return component('StatusLineSession', status) .. ' '
 end
 
 local diagnostic_levels = {

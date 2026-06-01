@@ -168,6 +168,7 @@ map('n', 'zK', 'zC', {silent = true})
 map('n', 'zj', 'zo', {silent = true})
 map('n', 'zJ', 'zO', {silent = true})
 map({'n','x'}, 'q', '<NOP>') -- avoid accidental macros
+map('n', 'gcu', 'gcgc', { remap = true })
 
 -- Insert mode
 map('i', '<C-j>', '<C-n>')
@@ -178,7 +179,7 @@ map('i', '<C-l>', '<C-n>')
 map('n', 'cn', 'cgn', {silent = true})
 map({'n', 'x'}, 'Z', 'zzzH')
 map('n', '<A-LeftMouse>', '<nop>')
-map('n', '<CR>', '<Cmd>w<CR>', {silent = true})
+map('n', '<CR>', '<Cmd>silent w<CR>', {silent = true})
 map('', '<C-q>', '<Cmd>q<CR>', {silent = true})
 map('n', '<space>l', '<Cmd>vsplit<CR>', {silent = true})
 map('n', '<space>j', '<Cmd>split<CR>', {silent = true})
@@ -246,7 +247,7 @@ map('n', '[d', function() move_line'up' end)
 map('n', ']d', function() move_line'down' end)
 
 -- Bookmarks
-map('n', ':V', '<Cmd>e $VIMRUNTIME<CR>', {silent = true})
+map('n', ':R', '<Cmd>e $VIMRUNTIME<CR>', {silent = true})
 map('n', ':C', '<Cmd>e ~/.config/nvim/lua/<CR>', {silent = true})
 map('n', ':L', '<Cmd>e ~/.config/nvim/lua/<CR>', {silent = true})
 map('n', ':P', '<Cmd>e ~/.local/share/nvim/site/pack/core/opt/<CR>', {silent = true})
@@ -294,5 +295,3 @@ map('n', '<space>xl', function() if vim.fn.getloclist(0, { winid = 0 }).winid ~=
 cabbrev('man', 'vert Man')
 cabbrev('git', 'Git')
 cabbrev('g', 'Git')
-
-map('n', 'gcu', 'gcgc', { remap = true })

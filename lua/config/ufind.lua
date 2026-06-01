@@ -226,11 +226,11 @@ local function buffers()
     })
 end
 
-local function find()
-    ufind.open_live('fd --color=always --fixed-strings --max-results=100 --type=file --', cfg{
-        ansi = true,
-    })
-end
+-- local function find()
+--     ufind.open_live('fd --color=always --fixed-strings --max-results=100 --type=file --', cfg{
+--         ansi = true,
+--     })
+-- end
 
 local function notes()
     local paths = vim.fn.systemlist('fd --type=file "" ' .. os.getenv'HOME' .. '/notes')
@@ -387,8 +387,8 @@ end
 
 map('n', '<space>b', buffers)
 map('n', '<space>o', oldfiles)
-map('n', '<space>f', find)
-map('n', '<space>F', interactive_find)
+-- map('n', '<space>f', find)
+map('n', '<space>f', interactive_find)
 map('n', '<space>n', notes)
 map('n', '<space>c', colorschemes)
 -- map('n', '<space>x', live_grep)

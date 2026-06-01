@@ -35,21 +35,23 @@ au('LspAttach', '*', function(args)
     map('gd', '<Cmd>lua vim.lsp.buf.definition()<CR>')
     map('gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>')
     map('gi', '<Cmd>lua vim.lsp.buf.hover()<CR>')
-    -- map('gi', '<Cmd>lua vim.lsp.buf.implementation()<CR>')
     map('gt', '<Cmd>lua vim.lsp.buf.type_definition()<CR>')
     map('gr', '<Cmd>lua vim.lsp.buf.rename()<CR>')
     map('gR', '<Cmd>lua vim.lsp.buf.references()<CR>')
     map('ga', '<Cmd>lua vim.lsp.buf.code_action()<CR>')
     map(',f', '<Cmd>lua vim.lsp.buf.format({async=true})<CR>')
-    -- map('grx', '<Cmd>lua vim.lsp.codelens.run()<CR>')
     map('g0', '<Cmd>lua vim.lsp.buf.document_symbol()<CR>')
 
     map(']e', '<Cmd>lua vim.diagnostic.jump({count=1, float=true})<CR>')
     map('[e', '<Cmd>lua vim.diagnostic.jump({count=-1, float=true})<CR>')
 
     local client = vim.lsp.get_client_by_id(args.data.client_id)
-    if client:supports_method('textDocument/completion') then
-        vim.lsp.completion.enable(true, client.id, buf, { autotrigger = true })
+    if client then
+        if client:supports_method('textDocument/completion') then
+            vim.lsp.completion.enable(true, client.id, buf, { autotrigger = true })
+        end
+        -- don't highlight in comments
+        client.server_capabilities.semanticTokensProvider = nil
     end
 end)
 
