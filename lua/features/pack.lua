@@ -5,14 +5,11 @@ local function get_inactive_plugins()
         :totable()
 end
 
-local function prompt_delete_inactive_plugins()
-    if #vim.api.nvim_list_uis() == 0 then
-        return false
-    end
-
+local function pack_clean()
     local inactive = get_inactive_plugins()
     if #inactive == 0 then
-        return false
+        vim.notify('No inactive plugins.', vim.log.levels.INFO)
+        return
     end
 
     vim.api.nvim_echo({
@@ -29,15 +26,12 @@ local function prompt_delete_inactive_plugins()
             vim.api.nvim_exec_autocmds('User', { pattern = 'PackChanged' })
         end
     end)
-
-    return true
 end
 
 com('PackUpdate', function() vim.pack.update(nil, { force = true }) end)
 com('PackList',   function() vim.pack.update(nil, { offline = true }) end)
-com('PackClean',  prompt_delete_inactive_plugins)
+com('PackClean',  pack_clean)
 
 map('n', '<space>pu', '<Cmd>PackUpdate<CR>')
-map('n', '<space>pi', '<Cmd>PackUpdate<CR>')
 map('n', '<space>pl', '<Cmd>PackList<CR>')
 map('n', '<space>pc', '<Cmd>PackClean<CR>')

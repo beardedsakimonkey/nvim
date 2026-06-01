@@ -140,37 +140,3 @@ local function open_current_file_diff()
 end
 
 map('n', '<space>gd', open_current_file_diff)
-
-
--- mini.git -------------------------------------------------------------------
-require('mini.git').setup()
-
-map({'n', 'x'}, '<space>gs', '<Cmd>lua MiniGit.show_at_cursor()<CR>')
-map({'n', 'x'}, '<space>gh', '<Cmd>lua MiniGit.show_range_history()<CR>')
-
-map('n', '<space>gc', '<Cmd>silent vert Git commit -a<CR>')
-map('n', '<space>gC', '<Cmd>silent vert Git commit --amend --reuse-message=HEAD<CR>')
-map('n', '<space>gb', '<Cmd>leftabove vert Git blame %<CR>')
-map('n', '<space>gl', '<Cmd>vert Git log<CR>')
-
-au('User', 'MiniGitCommandSplit', function(au_data)
-    if au_data.data.git_subcommand ~= 'blame' then return end
-
-    vim.api.nvim_win_call(au_data.data.win_stdout, function()
-        vim.cmd('vertical resize 45')
-        vim.wo.winfixwidth = true
-    end)
-
-    -- Align blame output with source
-    local win_src = au_data.data.win_source
-    vim.wo.wrap = false
-    vim.fn.winrestview({ topline = vim.fn.line('w0', win_src) })
-    vim.api.nvim_win_set_cursor(0, { vim.fn.line('.', win_src), 0 })
-
-    -- Bind both windows so that they scroll together
-    vim.wo[win_src].scrollbind, vim.wo.scrollbind = true, true
-end)
-
--- mini.files -----------------------------------------------------------------
--- require'mini.files'.setup({})
--- map('n', '-', '<Cmd>lua MiniFiles.open()<CR>')

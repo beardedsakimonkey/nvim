@@ -15,11 +15,6 @@
       "src": "https://github.com/AndrewRadev/linediff.vim",
       "version": "'245d16328c47a132574e0fa4298d24a0f78b20b0'"
     },
-    "mini-git": {
-      "rev": "832467238636e3dfa1db76de929996b6668c35ef",
-      "src": "https://github.com/echasnovski/mini-git",
-      "version": "'stable'"
-    },
     "mini.bufremove": {
       "rev": "10857aa39160c127694151828914df3131ba83b6",
       "src": "https://github.com/echasnovski/mini.bufremove",
@@ -28,11 +23,6 @@
     "mini.diff": {
       "rev": "fbb93ea1728e7c9d0944df8bd022a68402bd2e7e",
       "src": "https://github.com/echasnovski/mini.diff",
-      "version": "'stable'"
-    },
-    "mini.files": {
-      "rev": "22c64f010eef047ed270e29e7cc266cd4740787e",
-      "src": "https://github.com/echasnovski/mini.files",
       "version": "'stable'"
     },
     "mini.hipatterns": {
@@ -59,22 +49,24 @@
       "src": "https://github.com/kylechui/nvim-surround",
       "version": "'2e93e154de9ff326def6480a4358bfc149d5da2c'"
     },
-    "nvim-tree.lua": {
-      "rev": "07f541fcaa4a5ae019598240362449ab7e9812b3",
-      "src": "https://github.com/nvim-tree/nvim-tree.lua"
-    },
     "nvim-ufind": {
       "rev": "ad2a5b91ff52a4015d5fcb667c754bb7aca9bf1a",
       "src": "https://github.com/beardedsakimonkey/nvim-ufind"
     },
     "onehalf": {
       "rev": "cb25877a6aada5ef98681950b85bd9f9f7f29a59",
-      "src": "https://github.com/ClearAspect/onehalf"
+      "src": "https://github.com/ClearAspect/onehalf",
+      "version": "'cb25877a6aada5ef98681950b85bd9f9f7f29a59'"
     },
     "typst.vim": {
       "rev": "1d5436c0f55490893892441c0eca55e6cdf4916c",
       "src": "https://github.com/kaarmu/typst.vim",
       "version": "'1d5436c0f55490893892441c0eca55e6cdf4916c'"
+    },
+    "vim-fugitive": {
+      "rev": "3b753cf8c6a4dcde6edee8827d464ba9b8c4a6f0",
+      "src": "https://github.com/tpope/vim-fugitive",
+      "version": "'3b753cf8c6a4dcde6edee8827d464ba9b8c4a6f0'"
     },
     "vim-jsx-pretty": {
       "rev": "6989f1663cc03d7da72b5ef1c03f87e6ddb70b41",
