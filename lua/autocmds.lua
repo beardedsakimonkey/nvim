@@ -60,6 +60,7 @@ local function set_diagnostic_undercurl()
     update_hl('DiagnosticUnderlineInfo')
     update_hl('DiagnosticUnderlineHint')
     update_hl('DiagnosticUnderlineOk')
+    vim.api.nvim_set_hl(0, 'FoldColumn', { link = 'Comment' })
 end
 
 local au = aug'my/autocmds'

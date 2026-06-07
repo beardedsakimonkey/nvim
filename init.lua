@@ -33,4 +33,4 @@ require 'features.ghostty_theme'.apply()
 -- After setting up globals so they're available to ftplugin / colorscheme files
 vim.cmd 'syntax enable'  -- see :h syntax-loading
 
-require'vim._core.ui2'.enable({enable = true})
+-- require'vim._core.ui2'.enable({enable = true})

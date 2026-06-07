@@ -103,7 +103,13 @@ local function git_status(winid, bufnr)
     return table.concat(parts, ' ') .. ' '
 end
 
+local session_status_available = false
 local function session_status()
+    if not session_status_available then
+        session_status_available = vim.fn.exists('*session#status') == 1
+        if not session_status_available then return '' end
+    end
+
     local status = vim.fn['session#status']()
     if status == '' then return '' end
     -- only show the first character

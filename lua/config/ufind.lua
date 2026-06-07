@@ -1,73 +1,5 @@
 local ufind = require'ufind'
 local util = require'util'
-local uv = vim.uv
-local Uf = require'ufind.Uf'
-
-local function install_selection_hook()
-    if Uf._config_selection_hook_installed then
-        return
-    end
-    Uf._config_selection_hook_installed = true
-
-    local new = Uf.new
-    Uf.new = function(...)
-        local uf = new(...)
-        uf._config_on_select = Uf._config_next_on_select
-        uf._config_on_scroll = Uf._config_next_on_scroll
-        Uf._config_next_on_select = nil
-        Uf._config_next_on_scroll = nil
-        return uf
-    end
-
-    local function on_select(uf)
-        if not uf._config_on_select then
-            return
-        end
-        local ok, err = xpcall(uf._config_on_select, debug.traceback, uf)
-        if not ok then
-            uf._config_on_select = nil
-            vim.notify(err, vim.log.levels.ERROR)
-        end
-    end
-
-    local move_cursor_and_redraw = Uf.move_cursor_and_redraw
-    Uf.move_cursor_and_redraw = function(self, ...)
-        move_cursor_and_redraw(self, ...)
-        on_select(self)
-    end
-
-    local redraw_results = Uf.redraw_results
-    Uf.redraw_results = function(self, ...)
-        redraw_results(self, ...)
-        on_select(self)
-    end
-
-    local scroll_horizontally = Uf.scroll_horizontally
-    Uf.scroll_horizontally = function(self, ...)
-        if self._config_on_scroll then
-            local ok, err = xpcall(self._config_on_scroll, debug.traceback, self, ...)
-            if not ok then
-                self._config_on_scroll = nil
-                vim.notify(err, vim.log.levels.ERROR)
-            end
-            return
-        end
-        scroll_horizontally(self, ...)
-    end
-end
-
-install_selection_hook()
-
-local function with_picker_hooks(hooks, open)
-    Uf._config_next_on_select = hooks.on_select
-    Uf._config_next_on_scroll = hooks.on_scroll
-    local ok, err = xpcall(open, debug.traceback)
-    if not ok then
-        Uf._config_next_on_select = nil
-        Uf._config_next_on_scroll = nil
-        error(err, 0)
-    end
-end
 
 local function cfg(t)
     return vim.tbl_deep_extend('keep', t, {
@@ -109,13 +41,6 @@ local function on_complete_grep(action, results)
         })
         vim.cmd(action .. '| copen | cc!')
     end
-end
-
-local function live_grep()
-    ufind.open_live('rg --vimgrep --fixed-strings --color=ansi -- ', cfg{
-        ansi = true,
-        on_complete = on_complete_grep,
-    })
 end
 
 local function match_basename(str, query)
@@ -204,6 +129,8 @@ local function basename_cfg(t)
     })
 end
 
+-- Oldfiles -------------------------------------------------------------------
+
 local function oldfiles_source()
     return vim.tbl_filter(function(fname)
         return fname
@@ -216,6 +143,10 @@ local function oldfiles()
     ufind.open(split_basename(oldfiles_source()), basename_cfg{})
 end
 
+map('n', '<space>o', oldfiles)
+
+-- Buffers --------------------------------------------------------------------
+
 local function buffers()
     ufind.open(split_basename(require'ufind.source.buffers'()), basename_cfg{
         keymaps = {
@@ -226,144 +157,19 @@ local function buffers()
     })
 end
 
--- local function find()
---     ufind.open_live('fd --color=always --fixed-strings --max-results=100 --type=file --', cfg{
---         ansi = true,
---     })
--- end
+map('n', '<space>b', buffers)
 
-local function notes()
-    local paths = vim.fn.systemlist('fd --type=file "" ' .. os.getenv'HOME' .. '/notes')
-    ufind.open(split_basename(paths), basename_cfg{})
-end
+-- Find -----------------------------------------------------------------------
 
-local function colorscheme_source()
-    local schemes = vim.fn.getcompletion('', 'color')
-    table.sort(schemes)
-
-    local seen = {}
-    local result = {}
-    local function add(scheme)
-        if scheme and scheme ~= '' and not seen[scheme] then
-            seen[scheme] = true
-            result[#result+1] = scheme
-        end
-    end
-
-    add(vim.g.colors_name)
-    for _, scheme in ipairs(schemes) do
-        add(scheme)
-    end
-    return result
-end
-
-local failed_colorschemes = {}
-
-local function apply_colorscheme(scheme, uf)
-    if not scheme or scheme == '' or scheme == vim.g.colors_name then
-        return
-    end
-
-    local ok, err = pcall(vim.cmd.colorscheme, scheme)
-    if not ok then
-        if not failed_colorschemes[scheme] then
-            failed_colorschemes[scheme] = true
-            vim.notify(err, vim.log.levels.WARN)
-        end
-        return
-    end
-
-    failed_colorschemes[scheme] = nil
-    if uf then
-        require'ufind.highlight'.setup(uf.ansi)
-    end
-end
-
-local function preview_colorscheme(uf)
-    if not vim.api.nvim_buf_is_valid(uf.result_buf) then
-        return
-    end
-
-    local cursor = uf:get_cursor()
-    local scheme = vim.api.nvim_buf_get_lines(
-        uf.result_buf, cursor - 1, cursor, false)[1]
-    if scheme == uf._config_last_colorscheme then
-        return
-    end
-
-    uf._config_last_colorscheme = scheme
-    apply_colorscheme(scheme, uf)
-end
-
-local function set_colorscheme_background(uf, scroll)
-    local bg = scroll == 'scroll_left' and 'light' or 'dark'
-    if vim.o.background == bg then
-        return
-    end
-
-    vim.o.background = bg
-    require'ufind.highlight'.setup(uf.ansi)
-end
-
-local function colorschemes()
-    with_picker_hooks({
-        on_select = preview_colorscheme,
-        on_scroll = set_colorscheme_background,
-    }, function()
-        ufind.open(colorscheme_source(), cfg{
-            keymaps = {
-                scroll_left = '<Left>',
-                scroll_right = '<Right>',
-            },
-            layout = {
-                height = 0.45,
-                width = 0.35,
-            },
-            on_complete = function(_, results)
-                apply_colorscheme(results[#results])
-            end,
-        })
-    end)
-end
-
-local function interactive_find()
-    local function ls(path)
-        local paths = {[1] = path .. '/..'}
-        for name in vim.fs.dir(path) do
-            table.insert(paths, path .. '/' .. name)
-        end
-        return paths
-    end
-    local function get_highlights(line)
-        local col_start = line:find('/([^/]+)$')
-        if col_start then
-            return {
-                {col_start = 0, col_end = col_start, hl_group = 'Comment'},
-            }
-        else
-            return {}
-        end
-    end
-    local function on_complete(action, lines)
-        local line = assert(uv.fs_realpath(lines[1]))
-        local info = uv.fs_stat(line)
-        local is_dir = info and info.type == 'directory' or false
-        if is_dir then
-            vim.schedule(function()
-                ufind.open(ls(line), cfg{
-                    on_complete = on_complete,
-                    get_highlights = get_highlights,
-                })
-            end)
-        else
-            vim.cmd(action .. ' ' .. vim.fn.fnameescape(line))
-        end
-    end
-    ufind.open(ls(uv.cwd()), cfg{
-        on_complete = on_complete,
-        get_highlights = get_highlights,
+local function find()
+    ufind.open_live('fd --color=always --fixed-strings --max-results=100 --type=file --', cfg{
+        ansi = true,
     })
 end
+
+map('n', '<space>f', find)
+
+-- Help -----------------------------------------------------------------------
 
 local function help_grep()
     ufind.open_live(function(query)
@@ -385,14 +191,10 @@ local function help_grep()
         })
 end
 
-map('n', '<space>b', buffers)
-map('n', '<space>o', oldfiles)
--- map('n', '<space>f', find)
-map('n', '<space>f', interactive_find)
-map('n', '<space>n', notes)
-map('n', '<space>c', colorschemes)
--- map('n', '<space>x', live_grep)
+
 map('n', '<space>h', help_grep)
+
+-- Grep -----------------------------------------------------------------------
 
 local function grep(query_str, query_tbl)
     local function cmd()

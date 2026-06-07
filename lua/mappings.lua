@@ -26,25 +26,28 @@ local function repeat_last_edit()
     end
 end
 
+-- Check if previously accessed window (#) is sitting exactly adjacent to the
+-- current window in the direction we want to move. If it is, move to that
+-- window, otherwise fallback to default behavior.
 local function navigate(dir)
-    local prev_win_same_dir -- previous window in same direction
-    local cnr = vim.fn.winnr()
-    local pnr = vim.fn.winnr('#')
+    local prev_win_same_dir
+    local cur_win  = vim.fn.winnr()
+    local prev_win = vim.fn.winnr('#')
     if dir == 'h' then
-        local leftedge_cur_win = vim.fn.win_screenpos(cnr)[2]
-        local rightedge_prev_win = vim.fn.win_screenpos(pnr)[2] + vim.fn.winwidth(pnr) - 1
+        local leftedge_cur_win = vim.fn.win_screenpos(cur_win)[2]
+        local rightedge_prev_win = vim.fn.win_screenpos(prev_win)[2] + vim.fn.winwidth(prev_win) - 1
         prev_win_same_dir =  (leftedge_cur_win - 1) == (rightedge_prev_win + 1)
     elseif dir == 'l' then
-        local leftedge_prev_win = vim.fn.win_screenpos(pnr)[2]
-        local rightedge_cur_win = vim.fn.win_screenpos(cnr)[2] + vim.fn.winwidth(cnr) - 1
+        local leftedge_prev_win = vim.fn.win_screenpos(prev_win)[2]
+        local rightedge_cur_win = vim.fn.win_screenpos(cur_win)[2] + vim.fn.winwidth(cur_win) - 1
         prev_win_same_dir = (leftedge_prev_win - 1) == (rightedge_cur_win + 1)
     elseif dir == 'j' then
-        local topedge_prev_win = vim.fn.win_screenpos(pnr)[1]
-        local bottomedge_cur_win = vim.fn.win_screenpos(cnr)[1] + vim.fn.winheight(cnr) - 1
+        local topedge_prev_win = vim.fn.win_screenpos(prev_win)[1]
+        local bottomedge_cur_win = vim.fn.win_screenpos(cur_win)[1] + vim.fn.winheight(cur_win) - 1
         prev_win_same_dir = (topedge_prev_win - 1) == (bottomedge_cur_win + 1)
     elseif dir == 'k' then
-        local topedge_cur_win = vim.fn.win_screenpos(cnr)[1]
-        local bottomedge_prev_win = vim.fn.win_screenpos(pnr)[1] + vim.fn.winheight(pnr) - 1
+        local topedge_cur_win = vim.fn.win_screenpos(cur_win)[1]
+        local bottomedge_prev_win = vim.fn.win_screenpos(prev_win)[1] + vim.fn.winheight(prev_win) - 1
         prev_win_same_dir = (topedge_cur_win - 1) == (bottomedge_prev_win + 1)
     end
     vim.cmd('try | wincmd ' .. (prev_win_same_dir and 'p' or dir) .. ' | catch | endtry')

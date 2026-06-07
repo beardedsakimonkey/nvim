@@ -60,10 +60,10 @@ require('mini.diff').setup({
     apply = 'gh',
     reset = 'gH',
     textobject = 'gh',
-    goto_first = '[H',
-    goto_prev = '[h',
-    goto_next = ']h',
-    goto_last = ']H',
+    goto_first = '[C',
+    goto_prev  = '[c',
+    goto_next  = ']c',
+    goto_last  = ']C',
   },
 })
 map('n', 'god', function()

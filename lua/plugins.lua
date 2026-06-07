@@ -16,6 +16,7 @@ vim.pack.add({
     { src = gh'kylechui/nvim-surround',      version = '2e93e154de9ff326def6480a4358bfc149d5da2c' },
     { src = gh'AndrewRadev/linediff.vim',    version = '245d16328c47a132574e0fa4298d24a0f78b20b0' },
     { src = gh'andymass/vim-matchup',        version = 'a2d618496223386844acb5a6763cfc3cc1357af1' },
+    { src = gh'nvim-tree/nvim-web-devicons', version = 'dfbfaa967a6f7ec50789bead7ef87e336c1fa63c' },
 
     -- Filetypes
     { src = gh'DingDean/wgsl.vim',           version = 'bb6516e0356e81cc10a885e63273ef1d63cc74b1' },
@@ -23,7 +24,7 @@ vim.pack.add({
     { src = gh'MaxMEllon/vim-jsx-pretty',    version = '6989f1663cc03d7da72b5ef1c03f87e6ddb70b41' },
 
     -- Colorschemes
-    { src = gh'rebelot/kanagawa.nvim',       version = 'bb85e4bfc8d89b0e62c8fa53ccdd13d12e2f77b3' },
+    { src = gh'folke/tokyonight.nvim',       version = 'cdc07ac78467a233fd62c493de29a17e0cf2b2b6' },
     { src = gh'loctvl842/monokai-pro.nvim',  version = 'a68e38b8e55d69a215d0f02598900a79c356da9d' },
     { src = gh'ClearAspect/onehalf',         version = 'cb25877a6aada5ef98681950b85bd9f9f7f29a59' },
 
@@ -47,3 +48,6 @@ require'nvim-surround'.setup({ indent_lines = false })
 -- vim-matchup ----------------------------------------------------------------
 map({'n', 'x', 'o'}, '<Tab>',   '<Plug>(matchup-%)',  {remap = true})
 map({'n', 'x', 'o'}, '<S-Tab>', '<Plug>(matchup-g%)', {remap = true})
+
+-- vim-fugitive ---------------------------------------------------------------
+map('n', '<space>g', '<Cmd>Git<CR>')

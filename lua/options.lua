@@ -17,6 +17,7 @@ vim.opt.splitbelow = true
 -- vim.opt.splitkeep = 'screen'
 vim.opt.winminheight = 0
 vim.opt.winminwidth = 0
+vim.opt.winborder = 'rounded'
 
 vim.opt.expandtab = true
 vim.opt.autoindent = true
@@ -42,14 +43,16 @@ vim.opt.fileignorecase = false
 
 vim.opt.foldenable = true
 vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.opt.foldexpr   = 'v:lua.vim.treesitter.foldexpr()'
 vim.opt.foldlevel = 99 -- fixes folds closed on nvim startup
 vim.opt.foldlevelstart = 99
 vim.opt.foldopen:remove('block')
+vim.opt.foldtext = ''
 
 vim.opt.modeline = false
 vim.opt.shortmess = 'filnxtToOfaTWIcFS'
-vim.opt.fillchars = {eob = ' '}--,  vert = "░" }
+vim.o.fillchars = 'eob: ,fold: ,foldopen:,foldsep: ,foldinner: ,foldclose:'
+vim.o.foldcolumn = 'auto'
 vim.opt.list = true
 vim.opt.colorcolumn = '+0'
 
@@ -66,5 +69,3 @@ vim.opt.jumpoptions = 'view'
 
 vim.opt.diffopt:append('linematch:60')  -- better diff
 
--- vim.opt.winborder = '▛,▀,▜,▐,▟,▄,▙,▌'
--- vim.opt.winborder = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" }

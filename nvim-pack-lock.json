@@ -5,11 +5,6 @@
       "src": "https://github.com/github/copilot.vim",
       "version": "'a12fd5672110c8aa7e3c8419e28c96943ca179be'"
     },
-    "kanagawa.nvim": {
-      "rev": "bb85e4bfc8d89b0e62c8fa53ccdd13d12e2f77b3",
-      "src": "https://github.com/rebelot/kanagawa.nvim",
-      "version": "'bb85e4bfc8d89b0e62c8fa53ccdd13d12e2f77b3'"
-    },
     "linediff.vim": {
       "rev": "245d16328c47a132574e0fa4298d24a0f78b20b0",
       "src": "https://github.com/AndrewRadev/linediff.vim",
@@ -41,7 +36,7 @@
       "version": "'a68e38b8e55d69a215d0f02598900a79c356da9d'"
     },
     "nvim-dora": {
-      "rev": "b15b18f867be4988849c24ba1997f8269085adb3",
+      "rev": "53ed44805eae0156a7f03ebc5bffa80c01b635f0",
       "src": "https://github.com/beardedsakimonkey/nvim-dora"
     },
     "nvim-surround": {
@@ -53,10 +48,20 @@
       "rev": "ad2a5b91ff52a4015d5fcb667c754bb7aca9bf1a",
       "src": "https://github.com/beardedsakimonkey/nvim-ufind"
     },
+    "nvim-web-devicons": {
+      "rev": "dfbfaa967a6f7ec50789bead7ef87e336c1fa63c",
+      "src": "https://github.com/nvim-tree/nvim-web-devicons",
+      "version": "'dfbfaa967a6f7ec50789bead7ef87e336c1fa63c'"
+    },
     "onehalf": {
       "rev": "cb25877a6aada5ef98681950b85bd9f9f7f29a59",
       "src": "https://github.com/ClearAspect/onehalf",
       "version": "'cb25877a6aada5ef98681950b85bd9f9f7f29a59'"
+    },
+    "tokyonight.nvim": {
+      "rev": "cdc07ac78467a233fd62c493de29a17e0cf2b2b6",
+      "src": "https://github.com/folke/tokyonight.nvim",
+      "version": "'cdc07ac78467a233fd62c493de29a17e0cf2b2b6'"
     },
     "typst.vim": {
       "rev": "1d5436c0f55490893892441c0eca55e6cdf4916c",
