@@ -1,49 +1,90 @@
-local gh = function(x) return 'https://github.com/' .. x end
-
-vim.pack.add({
+require('features.pack').add({
     -- Trusted
-    gh'beardedsakimonkey/nvim-dora',
-    gh'beardedsakimonkey/nvim-ufind',
+    {'beardedsakimonkey/nvim-dora',  pin = false},
+    {'beardedsakimonkey/nvim-ufind', pin = false},
 
     -- Untrusted
-    { src = gh'echasnovski/mini.operators',  version = 'stable' },
-    { src = gh'echasnovski/mini.bufremove',  version = 'stable' },
-    { src = gh'echasnovski/mini.hipatterns', version = 'stable' },
-    { src = gh'echasnovski/mini.diff',       version = 'stable' },
-    { src = gh'tpope/vim-fugitive',          version = '3b753cf8c6a4dcde6edee8827d464ba9b8c4a6f0' },
-    { src = gh'tpope/vim-sleuth',            version = 'be69bff86754b1aa5adcbb527d7fcd1635a84080' },
-    { src = gh'github/copilot.vim',          version = 'a12fd5672110c8aa7e3c8419e28c96943ca179be' },
-    { src = gh'kylechui/nvim-surround',      version = '2e93e154de9ff326def6480a4358bfc149d5da2c' },
-    { src = gh'AndrewRadev/linediff.vim',    version = '245d16328c47a132574e0fa4298d24a0f78b20b0' },
-    { src = gh'andymass/vim-matchup',        version = 'a2d618496223386844acb5a6763cfc3cc1357af1' },
-    { src = gh'nvim-tree/nvim-web-devicons', version = 'dfbfaa967a6f7ec50789bead7ef87e336c1fa63c' },
+    {'echasnovski/mini.operators',  version = 'stable'},
+    {'echasnovski/mini.bufremove',  version = 'stable'},
+    {'echasnovski/mini.hipatterns', version = 'stable'},
+    {'echasnovski/mini.diff',       version = 'stable'},
+    'tpope/vim-fugitive',
+    'tpope/vim-sleuth',
+    'github/copilot.vim',
+    'kylechui/nvim-surround',
+    'AndrewRadev/linediff.vim',
+    'andymass/vim-matchup',
+    'nvim-tree/nvim-web-devicons',
 
     -- Filetypes
-    { src = gh'DingDean/wgsl.vim',           version = 'bb6516e0356e81cc10a885e63273ef1d63cc74b1' },
-    { src = gh'kaarmu/typst.vim',            version = '1d5436c0f55490893892441c0eca55e6cdf4916c' },
-    { src = gh'MaxMEllon/vim-jsx-pretty',    version = '6989f1663cc03d7da72b5ef1c03f87e6ddb70b41' },
+    'DingDean/wgsl.vim',
+    'kaarmu/typst.vim',
+    'MaxMEllon/vim-jsx-pretty',
 
     -- Colorschemes
-    { src = gh'folke/tokyonight.nvim',       version = 'cdc07ac78467a233fd62c493de29a17e0cf2b2b6' },
-    { src = gh'loctvl842/monokai-pro.nvim',  version = 'a68e38b8e55d69a215d0f02598900a79c356da9d' },
-    { src = gh'ClearAspect/onehalf',         version = 'cb25877a6aada5ef98681950b85bd9f9f7f29a59' },
-
-}, { confirm = true })
-
-require 'config.dora'
-require 'config.ufind'
-require 'config.mini'
+    'ClearAspect/onehalf',
+    'sainnhe/sonokai',
+})
 
 -- Neovim ---------------------------------------------------------------------
 stub_com('Undotree', 'nvim.undotree')
 stub_com('DiffTool', 'nvim.difftool', {nargs = '*', complete = 'file'})
+
+-- nvim-picky -----------------------------------------------------------------
+vim.opt.runtimepath:append(vim.fn.expand"~/code/nvim-picky")
+require('config.picky')
+
+-- nvim-dora ------------------------------------------------------------------
+require('dora').setup({
+    icons = true,
+})
+map('n', '-', '<Cmd>Dora<CR>')
+
+-- mini.hipatterns ------------------------------------------------------------
+local au = aug('my/mini')
+au('BufEnter', {'*.css'}, function(opts)
+    local hipatterns = require'mini.hipatterns'
+    hipatterns.enable(opts.buf, {
+        highlighters = {
+            hex_color = hipatterns.gen_highlighter.hex_color(),
+        },
+    })
+end)
+
+-- mini.operators -------------------------------------------------------------
+require('mini.operators').setup({
+    evaluate = { prefix = 'g=' },
+    exchange = { prefix = 'cx' },
+    multiply = { prefix = 'gm' },
+    replace  = { prefix = 'gr' },
+    sort     = { prefix = 'gs' }
+})
+
+require('mini.operators').make_mappings(
+    'exchange',
+    { textobject = 'cx', line = 'cxx', selection = 'X' }
+)
+
+-- mini.diff ------------------------------------------------------------------
+require('mini.diff').setup({
+  mappings = {
+    apply = 'gh',
+    reset = 'gH',
+    textobject = 'h',
+    goto_first = '[H',
+    goto_prev  = '[h',
+    goto_next  = ']h',
+    goto_last  = ']H',
+  },
+})
+map('n', 'god', function() require'mini.diff'.toggle_overlay(0) end)
 
 -- linediff -------------------------------------------------------------------
 vim.g.linediff_buffer_type = 'scratch'
 map('x', 'D', "mode() is# 'V' ? ':Linediff<cr>' : 'D'", {expr = true})
 
 -- nvim-surround --------------------------------------------------------------
-require'nvim-surround'.setup({ indent_lines = false })
+require('nvim-surround').setup({ indent_lines = false })
 
 -- vim-matchup ----------------------------------------------------------------
 map({'n', 'x', 'o'}, '<Tab>',   '<Plug>(matchup-%)',  {remap = true})

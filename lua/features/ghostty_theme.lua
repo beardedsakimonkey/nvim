@@ -6,7 +6,7 @@ local last_theme
 local schemes = {
     ['one half dark'] = 'onehalfdark',
     ['monokai classic'] = 'unokai',
-    ['kanagawa wave'] = 'kanagawa-wave',
+    ['sonokai'] = 'sonokai',
 }
 
 local function read(path)

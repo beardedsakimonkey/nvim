@@ -53,14 +53,6 @@ local function navigate(dir)
     vim.cmd('try | wincmd ' .. (prev_win_same_dir and 'p' or dir) .. ' | catch | endtry')
 end
 
-local function rename()
-    local cword = vim.fn.expand('<cword>')
-    vim.fn.setreg('/', ("\\<" .. cword .. "\\>"), 'c')
-    local keys = vim.api.nvim_replace_termcodes(':%s///gc<left><left><left>',
-        true, false, true)
-    vim.api.nvim_feedkeys(keys, 'n', false)
-end
-
 local function yank_doc(exp)
     local txt = vim.fn.expand(exp)
     vim.fn.setreg('"', txt, 'c')
@@ -226,8 +218,6 @@ map({"n", "x"}, "<RightMouse>", "<leftmouse>:<c-u>let @/='\\<<c-r>=expand(\"<cwo
 map('n', '<2-RightMouse>', '<RightMouse>')
 map("n", "<Space>s", "ms:<C-u>%s///g<left><left>")
 map("x", "<space>s", "\"vy:let @/='<c-r>v'<CR>:<C-u>%s///g<left><left>")
-map('n', 'R', rename)
-map('n', 'gr', 'R')
 
 -- Alt
 map('!', '<A-h>', '<Left>')

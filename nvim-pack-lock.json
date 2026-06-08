@@ -2,13 +2,11 @@
   "plugins": {
     "copilot.vim": {
       "rev": "a12fd5672110c8aa7e3c8419e28c96943ca179be",
-      "src": "https://github.com/github/copilot.vim",
-      "version": "'a12fd5672110c8aa7e3c8419e28c96943ca179be'"
+      "src": "https://github.com/github/copilot.vim"
     },
     "linediff.vim": {
       "rev": "245d16328c47a132574e0fa4298d24a0f78b20b0",
-      "src": "https://github.com/AndrewRadev/linediff.vim",
-      "version": "'245d16328c47a132574e0fa4298d24a0f78b20b0'"
+      "src": "https://github.com/AndrewRadev/linediff.vim"
     },
     "mini.bufremove": {
       "rev": "10857aa39160c127694151828914df3131ba83b6",
@@ -30,19 +28,13 @@
       "src": "https://github.com/echasnovski/mini.operators",
       "version": "'stable'"
     },
-    "monokai-pro.nvim": {
-      "rev": "a68e38b8e55d69a215d0f02598900a79c356da9d",
-      "src": "https://github.com/loctvl842/monokai-pro.nvim",
-      "version": "'a68e38b8e55d69a215d0f02598900a79c356da9d'"
-    },
     "nvim-dora": {
       "rev": "53ed44805eae0156a7f03ebc5bffa80c01b635f0",
       "src": "https://github.com/beardedsakimonkey/nvim-dora"
     },
     "nvim-surround": {
       "rev": "2e93e154de9ff326def6480a4358bfc149d5da2c",
-      "src": "https://github.com/kylechui/nvim-surround",
-      "version": "'2e93e154de9ff326def6480a4358bfc149d5da2c'"
+      "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-ufind": {
       "rev": "ad2a5b91ff52a4015d5fcb667c754bb7aca9bf1a",
@@ -50,48 +42,39 @@
     },
     "nvim-web-devicons": {
       "rev": "dfbfaa967a6f7ec50789bead7ef87e336c1fa63c",
-      "src": "https://github.com/nvim-tree/nvim-web-devicons",
-      "version": "'dfbfaa967a6f7ec50789bead7ef87e336c1fa63c'"
+      "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
     "onehalf": {
       "rev": "cb25877a6aada5ef98681950b85bd9f9f7f29a59",
-      "src": "https://github.com/ClearAspect/onehalf",
-      "version": "'cb25877a6aada5ef98681950b85bd9f9f7f29a59'"
+      "src": "https://github.com/ClearAspect/onehalf"
     },
-    "tokyonight.nvim": {
-      "rev": "cdc07ac78467a233fd62c493de29a17e0cf2b2b6",
-      "src": "https://github.com/folke/tokyonight.nvim",
-      "version": "'cdc07ac78467a233fd62c493de29a17e0cf2b2b6'"
+    "sonokai": {
+      "rev": "b023c5280b16fe2366f5e779d8d2756b3e5ee9c3",
+      "src": "https://github.com/sainnhe/sonokai"
     },
     "typst.vim": {
       "rev": "1d5436c0f55490893892441c0eca55e6cdf4916c",
-      "src": "https://github.com/kaarmu/typst.vim",
-      "version": "'1d5436c0f55490893892441c0eca55e6cdf4916c'"
+      "src": "https://github.com/kaarmu/typst.vim"
     },
     "vim-fugitive": {
       "rev": "3b753cf8c6a4dcde6edee8827d464ba9b8c4a6f0",
-      "src": "https://github.com/tpope/vim-fugitive",
-      "version": "'3b753cf8c6a4dcde6edee8827d464ba9b8c4a6f0'"
+      "src": "https://github.com/tpope/vim-fugitive"
     },
     "vim-jsx-pretty": {
       "rev": "6989f1663cc03d7da72b5ef1c03f87e6ddb70b41",
-      "src": "https://github.com/MaxMEllon/vim-jsx-pretty",
-      "version": "'6989f1663cc03d7da72b5ef1c03f87e6ddb70b41'"
+      "src": "https://github.com/MaxMEllon/vim-jsx-pretty"
     },
     "vim-matchup": {
       "rev": "a2d618496223386844acb5a6763cfc3cc1357af1",
-      "src": "https://github.com/andymass/vim-matchup",
-      "version": "'a2d618496223386844acb5a6763cfc3cc1357af1'"
+      "src": "https://github.com/andymass/vim-matchup"
     },
     "vim-sleuth": {
       "rev": "be69bff86754b1aa5adcbb527d7fcd1635a84080",
-      "src": "https://github.com/tpope/vim-sleuth",
-      "version": "'be69bff86754b1aa5adcbb527d7fcd1635a84080'"
+      "src": "https://github.com/tpope/vim-sleuth"
     },
     "wgsl.vim": {
       "rev": "bb6516e0356e81cc10a885e63273ef1d63cc74b1",
-      "src": "https://github.com/DingDean/wgsl.vim",
-      "version": "'bb6516e0356e81cc10a885e63273ef1d63cc74b1'"
+      "src": "https://github.com/DingDean/wgsl.vim"
     }
   }
 }
